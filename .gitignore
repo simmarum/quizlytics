@@ -105,3 +105,6 @@ venv.bak/
 
 # v-env
 v-env/
+
+# VSCode
+.vscode/
