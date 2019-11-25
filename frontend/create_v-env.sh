@@ -11,6 +11,7 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 rm -rf $SCRIPTPATH/v-env
 rm -rf $SCRIPTPATH/n-env
+rm -rf $SCRIPTPATH/quizlytics/node_modules
 
 python3 -m venv $SCRIPTPATH/v-env
 . $SCRIPTPATH/v-env/bin/activate
@@ -21,3 +22,9 @@ nodeenv==1.3.3
 . $SCRIPTPATH/v-env/bin/activate
 
 nodeenv $SCRIPTPATH/n-env
+
+. $SCRIPTPATH/n-env/bin/activate
+
+cd $SCRIPTPATH/quizlytics/
+
+npm install
