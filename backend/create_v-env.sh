@@ -15,4 +15,6 @@ python3 -m venv $SCRIPTPATH/v-env
 . $SCRIPTPATH/v-env/bin/activate
 
 pip3 install --compile \
-Django==2.2.7
+Django==2.2.7 \
+djangorestframework \
+pygments
