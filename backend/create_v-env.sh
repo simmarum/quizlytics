@@ -19,4 +19,5 @@ Django==2.2.7 \
 djangorestframework \
 pygments \
 django-rest-auth \
-djangorestframework_simplejwt
+djangorestframework_simplejwt \
+django-cors-headers
