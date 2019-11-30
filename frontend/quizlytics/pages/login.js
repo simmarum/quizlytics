@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/MyLayout'
-import { login } from '../utils/auth'
+import { auth } from '../utils/auth'
 import { api_path } from '../utils/api_path'
 import Router from 'next/router'
 
@@ -42,16 +42,12 @@ class Login extends Component {
             })
             if (response.ok) {
                 const data = await response.json()
-                login({ data })
+                auth({ data })
                 Router.push('/')
             } else {
                 console.log('Login failed.')
                 const data = await response.json()
-                console.log(data)
-
                 this.setState({ error: Object.entries(data) })
-                console.log(this.state)
-                // https://github.com/developit/unfetch#caveats
             }
         } catch (error) {
             console.error(
