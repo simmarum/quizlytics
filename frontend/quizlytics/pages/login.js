@@ -46,10 +46,12 @@ class Login extends Component {
                 Router.push('/')
             } else {
                 console.log('Login failed.')
+                const data = await response.json()
+                console.log(data)
+
+                this.setState({ error: Object.entries(data) })
+                console.log(this.state)
                 // https://github.com/developit/unfetch#caveats
-                let error = new Error(response.statusText)
-                error.response = response
-                return Promise.reject(error)
             }
         } catch (error) {
             console.error(
@@ -86,7 +88,7 @@ class Login extends Component {
                         <button type='submit'>Login</button>
 
                         <p className={`error ${this.state.error && 'show'}`}>
-                            {this.state.error && `Error: ${this.state.error}`}
+                            {this.state.error && `${this.state.error}`}
                         </p>
                     </form>
                 </div>
