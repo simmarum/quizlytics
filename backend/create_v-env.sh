@@ -17,4 +17,6 @@ python3 -m venv $SCRIPTPATH/v-env
 pip3 install --compile \
 Django==2.2.7 \
 djangorestframework \
-pygments
+pygments \
+django-rest-auth \
+djangorestframework_simplejwt

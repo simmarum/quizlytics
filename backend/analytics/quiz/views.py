@@ -1,4 +1,4 @@
-from quiz.permissions import IsOwnerOrReadOnly
+from quiz.permissions import get_permissions_login
 from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer
 from rest_framework import viewsets
 from quiz.models import City, User
@@ -11,6 +11,9 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_permissions(self):
+        return get_permissions_login(cls=self)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
