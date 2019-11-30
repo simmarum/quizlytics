@@ -3,6 +3,9 @@ import fetch from 'isomorphic-unfetch'
 import Layout from '../components/MyLayout'
 import { login } from '../utils/auth'
 import { api_path } from '../utils/api_path'
+import Router from 'next/router'
+
+
 
 class Login extends Component {
 
@@ -38,8 +41,9 @@ class Login extends Component {
                 body: JSON.stringify({ email, password })
             })
             if (response.ok) {
-                const { token } = await response.json()
-                login({ token })
+                const data = await response.json()
+                login({ data })
+                Router.push('/')
             } else {
                 console.log('Login failed.')
                 // https://github.com/developit/unfetch#caveats

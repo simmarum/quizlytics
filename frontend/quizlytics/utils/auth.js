@@ -1,4 +1,3 @@
-
 import Router from 'next/router'
 import nextCookie from 'next-cookies'
 import cookie from "js-cookie";
@@ -6,6 +5,7 @@ import cookie from "js-cookie";
 export const login = ctx => {
     const { token } = nextCookie(ctx)
 
+    console.log(token)
     if (ctx.req && !token) {
         ctx.res.writeHead(302, { Location: '/login' })
         ctx.res.end()
