@@ -1,9 +1,8 @@
-from django.contrib.auth.models import User, Group
-from quiz.models import City, CityUser
-from rest_framework import viewsets
-from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer, CityUserSerializer
-
 from quiz.permissions import IsOwnerOrReadOnly
+from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer
+from rest_framework import viewsets
+from quiz.models import City, User
+from django.contrib.auth.models import Group
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -28,12 +27,3 @@ class CityViewSet(viewsets.ModelViewSet):
     """
     queryset = City.objects.all()
     serializer_class = CitySerializer
-
-
-class CityUserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows city-user to be viewed or edited.
-    """
-    queryset = CityUser.objects.all()
-    serializer_class = CityUserSerializer
-    permission_classes = [IsOwnerOrReadOnly]
