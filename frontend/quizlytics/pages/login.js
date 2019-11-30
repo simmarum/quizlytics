@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/MyLayout'
-import { auth } from '../utils/auth'
+import { login } from '../utils/auth'
 import { api_path } from '../utils/api_path'
 import Router from 'next/router'
 
@@ -42,8 +42,11 @@ class Login extends Component {
             })
             if (response.ok) {
                 const data = await response.json()
-                auth({ data })
-                Router.push('/')
+                console.log("!!1")
+                console.log(data)
+                login(data)
+
+                Router.push('/profile')
             } else {
                 console.log('Login failed.')
                 const data = await response.json()

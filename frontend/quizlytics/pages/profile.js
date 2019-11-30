@@ -1,18 +1,13 @@
-import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
+import Layout from '../components/MyLayout'
 import nextCookie from 'next-cookies'
-import Layout from '../components/layout'
-import { withAuthSync } from '../utils/auth'
+import { auth } from '../utils/auth'
+import { api_path } from '../utils/api_path'
 
 const Profile = props => {
-    const { name, login, bio, avatarUrl } = props.data
-
     return (
         <Layout>
-            <img src={avatarUrl} alt='Avatar' />
-            <h1>{name}</h1>
-            <p className='lead'>{login}</p>
-            <p>{bio}</p>
+            <h1>Profile</h1>
 
             <style jsx>{`
         img {
@@ -39,21 +34,12 @@ const Profile = props => {
 Profile.getInitialProps = async ctx => {
     // We use `nextCookie` to get the cookie and pass the token to the
     // frontend in the `props`.
-    const { token } = nextCookie(ctx)
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-
-    const apiUrl = process.browser
-        ? `${protocol}://${window.location.host}/api/profile.js`
-        : `${protocol}://${ctx.req.headers.host}/api/profile.js`
-
-    const redirectOnError = () =>
-        process.browser
-            ? Router.push('/login')
-            : ctx.res.writeHead(301, { Location: '/login' })
-
+    const token = auth(nextCookie(ctx));
+    const url = api_path.users
     try {
-        const response = await fetch(apiUrl, {
-            credentials: 'include',
+        console.log(token)
+        const response = await fetch(url, {
+            // credentials: 'always',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: JSON.stringify({ token })
@@ -63,13 +49,18 @@ Profile.getInitialProps = async ctx => {
         if (response.ok) {
             return await response.json()
         } else {
+            console.log("E1")
+            console.log(response)
             // https://github.com/developit/unfetch#caveats
-            return redirectOnError()
+            // return redirectOnError()
         }
     } catch (error) {
         // Implementation or Network error
-        return redirectOnError()
+
+        console.log("E2")
+        console.log(error)
+        // return redirectOnError()
     }
 }
 
-export default withAuthSync(Profile)
+export default Profile
