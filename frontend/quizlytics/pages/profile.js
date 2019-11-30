@@ -35,6 +35,7 @@ Profile.getInitialProps = async ctx => {
     // We use `nextCookie` to get the cookie and pass the token to the
     // frontend in the `props`.
     const token = auth(nextCookie(ctx));
+
     const url = api_path.users
     try {
         console.log(token)

@@ -20,11 +20,7 @@ export const auth = ctx => {
 
     // If there's no token, it means the user is not logged in.
     if (!token) {
-        if (ctx.req) {
-            // If `ctx.req` is available it means we are on the server.
-            ctx.res.writeHead(302, { Location: '/login' })
-            ctx.res.end()
-        } else {
+        if (typeof window !== 'undefined') {
             // This should only happen on client.
             Router.push('/login')
         }
