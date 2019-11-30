@@ -3,6 +3,7 @@ from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer
 from rest_framework import viewsets
 from quiz.models import City, User
 from django.contrib.auth.models import Group
+from rest_framework.response import Response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -11,6 +12,14 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_queryset(self):
+        tmp_user = self.request.user
+        queryset = User.objects.all()
+        if tmp_user.is_superuser == 0:
+            queryset = queryset.filter(id=tmp_user.id)
+
+        return queryset
 
     def get_permissions(self):
         return get_permissions_login(cls=self)

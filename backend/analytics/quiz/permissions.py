@@ -37,9 +37,9 @@ def get_permissions_login(cls):
     permission_classes = []
     if cls.action == 'create':
         permission_classes = [AllowAny]
-    elif cls.action in ['retrieve', 'update', 'partial_update']:
+    elif cls.action in ['list', 'retrieve', 'update', 'partial_update']:
         permission_classes = [IsLoggedInUserOrAdmin]
-    elif cls.action in ['list', 'destroy']:
+    elif cls.action in ['destroy']:
         permission_classes = [IsAdminUser]
     return [permission() for permission in permission_classes]
 
