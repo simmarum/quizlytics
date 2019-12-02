@@ -3,7 +3,7 @@ import Layout from '../components/MyLayout'
 import nextCookie from 'next-cookies'
 import { Component } from 'react'
 import { auth, get_auth_header } from '../utils/auth'
-import { api_path } from '../utils/api_path'
+import { api_path, fetch_get } from '../utils/api_path'
 
 class Profile extends Component {
   constructor(props) {
@@ -126,22 +126,12 @@ class Profile extends Component {
     const token = auth(ctx);
 
     const url = api_path.users
-    try {
-      const response = await fetch(url, {
-        headers: get_auth_header(token)
-      })
-      console.log("$", response)
-      if (response.ok) {
-        return await response.json()
-      } else {
-        console.log("E1")
-        console.log(response)
-      }
-    } catch (error) {
-      // Implementation or Network error
-      console.log("E2")
-      console.log(error)
-    }
+    const api_data = fetch_get(
+      this,
+      url,
+      token
+    )
+    return api_data
   }
 }
 export default Profile
