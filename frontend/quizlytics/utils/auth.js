@@ -1,6 +1,9 @@
 import nextCookie from 'next-cookies'
 import cookie from "js-cookie";
 import Router from 'next/router'
+import dynamic from "next/dynamic";
+
+const LoginPage = dynamic(() => import("../pages/login"));
 
 
 export const login = (token_pair) => {
@@ -11,17 +14,17 @@ export const login = (token_pair) => {
 }
 
 export const auth = ctx => {
-    console.log(ctx)
-    // const access = nextCookie(ctx)
     const { token } = nextCookie(ctx)
-    // console.log(access)
-    console.log(token)
-    console.log(ctx.req)
 
     // If there's no token, it means the user is not logged in.
+
     if (!token) {
-        if (typeof window !== 'undefined') {
-            // This should only happen on client.
+        if (ctx.req) {
+            ctx.res.writeHead(302, { Location: '/login' })
+            ctx.res.end()
+            return
+        }
+        else {
             Router.push('/login')
         }
     }
