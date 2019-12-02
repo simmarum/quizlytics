@@ -10,14 +10,17 @@ class Profile extends Component {
     super(props)
 
     const user_profile = props.results[0]
+    console.log("**", user_profile)
     this.state = {
       email: user_profile.email,
       first_name: user_profile.first_name,
       last_name: user_profile.last_name,
+      city: user_profile.profile.city,
       error: ''
     }
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
     this.handleChangeLastName = this.handleChangeLastName.bind(this)
+    this.handleChangeCity = this.handleChangeCity.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -27,6 +30,10 @@ class Profile extends Component {
 
   handleChangeLastName(event) {
     this.setState({ last_name: event.target.value })
+  }
+
+  handleChangeCity(event) {
+    this.setState({ city: event.target.value })
   }
 
   async handleSubmit(event) {
@@ -91,6 +98,15 @@ class Profile extends Component {
               autoComplete='last_name'
               value={this.state.last_name}
               onChange={this.handleChangeLastName}
+            />
+            <label htmlFor='city'>City</label>
+            <input
+              type='city'
+              id='city'
+              name='city'
+              autoComplete='city'
+              value={this.state.city}
+              onChange={this.handleChangeCity}
             />
             <button type='submit'>Save</button>
 
