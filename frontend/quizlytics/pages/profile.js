@@ -5,8 +5,9 @@ import { auth } from '../utils/auth'
 import { api_path } from '../utils/api_path'
 
 const Profile = props => {
+  console.log("!", props)
   return (
-    <Layout>
+    <div>
       <h1>Profile</h1>
 
       <style jsx>{`
@@ -27,7 +28,7 @@ const Profile = props => {
           color: #6a737d;
         }
       `}</style>
-    </Layout>
+    </div>
   )
 }
 

@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/MyLayout'
-import { login } from '../utils/auth'
+import { login, auth } from '../utils/auth'
 import { api_path } from '../utils/api_path'
 import Router from 'next/router'
 
@@ -63,7 +63,7 @@ class Login extends Component {
 
     render() {
         return (
-            <Layout>
+            <div>
                 <div className='login'>
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor='email'>E-mail</label>
@@ -121,9 +121,17 @@ class Login extends Component {
             display: block;
           }
         `}</style>
-            </Layout>
+            </div>
         )
     }
+}
+
+Login.getInitialProps = async ctx => {
+    // We use `nextCookie` to get the cookie and pass the token to the
+    // frontend in the `props`.
+    const token = auth(ctx);
+    console.log("@@!", ctx)
+    return {}
 }
 
 export default Login

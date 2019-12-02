@@ -26,6 +26,17 @@ export const auth = ctx => {
             Router.push('/login')
         }
     }
+    // else {
+    //     if (ctx.req) {
+    //         if (ctx.req.url == '/login') {
+    //             ctx.res.writeHead(302, { Location: '/index' })
+    //             ctx.res.end()
+    //             return
+    //         }
+    //     } else {
+    //         Router.push('/index')
+    //     }
+    // }
 
 
     return token
