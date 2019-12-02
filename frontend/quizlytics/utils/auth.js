@@ -1,10 +1,6 @@
 import nextCookie from 'next-cookies'
 import cookie from "js-cookie";
 import Router from 'next/router'
-import dynamic from "next/dynamic";
-
-const LoginPage = dynamic(() => import("../pages/login"));
-
 
 const set_token = (token_pair) => {
     cookie.set('token', token_pair.access, { expires: 1 })
@@ -34,7 +30,6 @@ export const auth = ctx => {
 
     return token
 }
-
 
 export const logout = () => {
     cookie.remove("token");
