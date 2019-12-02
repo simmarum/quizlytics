@@ -4,10 +4,11 @@ from rest_framework import serializers
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    city_name = serializers.CharField(source='city.name', read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = ('city',)
+        fields = ('city', 'city_name')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
