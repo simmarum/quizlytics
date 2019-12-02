@@ -2,6 +2,12 @@ import nextCookie from 'next-cookies'
 import cookie from "js-cookie";
 import Router from 'next/router'
 
+export const get_auth_header = (token) => {
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+}
 const set_token = (token_pair) => {
     cookie.set('token', token_pair.access, { expires: 1 })
     cookie.set('token_refresh', token_pair.refresh, { expires: 1 })

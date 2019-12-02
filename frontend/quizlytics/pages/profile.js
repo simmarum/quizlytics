@@ -1,10 +1,11 @@
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/MyLayout'
 import nextCookie from 'next-cookies'
-import { auth } from '../utils/auth'
+import { auth, get_auth_header } from '../utils/auth'
 import { api_path } from '../utils/api_path'
 
 const Profile = props => {
+  console.log("!!!", props)
   return (
     <div>
       <h1>Profile</h1>
@@ -40,12 +41,9 @@ Profile.getInitialProps = async ctx => {
   try {
     const response = await fetch(url, {
       // credentials: 'always',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: JSON.stringify({ token })
-      }
+      headers: get_auth_header(token)
     })
-
+    console.log("$", response)
     if (response.ok) {
       return await response.json()
     } else {
