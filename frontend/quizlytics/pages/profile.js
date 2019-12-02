@@ -16,11 +16,12 @@ class Profile extends Component {
       first_name: user_profile.first_name,
       last_name: user_profile.last_name,
       city: user_profile.profile.city,
+      city_name: user_profile.profile.city_name,
       error: ''
     }
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
     this.handleChangeLastName = this.handleChangeLastName.bind(this)
-    this.handleChangeCity = this.handleChangeCity.bind(this)
+    this.handleChangeCityName = this.handleChangeCityName.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -32,8 +33,8 @@ class Profile extends Component {
     this.setState({ last_name: event.target.value })
   }
 
-  handleChangeCity(event) {
-    this.setState({ city: event.target.value })
+  handleChangeCityName(event) {
+    this.setState({ city_name: event.target.value })
   }
 
   async handleSubmit(event) {
@@ -99,14 +100,14 @@ class Profile extends Component {
               value={this.state.last_name}
               onChange={this.handleChangeLastName}
             />
-            <label htmlFor='city'>City</label>
+            <label htmlFor='city_name'>City Name</label>
             <input
-              type='city'
-              id='city'
-              name='city'
-              autoComplete='city'
-              value={this.state.city}
-              onChange={this.handleChangeCity}
+              type='city_name'
+              id='city_name'
+              name='city_name'
+              autoComplete='city_name'
+              value={this.state.city_name}
+              onChange={this.handleChangeCityName}
             />
             <button type='submit'>Save</button>
 
