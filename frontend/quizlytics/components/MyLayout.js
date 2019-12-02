@@ -15,7 +15,7 @@ const Layout = props => {
             {props.children}
 
             <style jsx global>{`
-        .login {
+        .login, .user_profile{
           max-width: 340px;
           margin: 0 auto;
           padding: 1rem;
@@ -35,6 +35,9 @@ const Layout = props => {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
+        input:read-only {
+            background-color: #bbbbbb;
+          }
         .error {
           margin: 0.5rem 0 0;
           display: none;
