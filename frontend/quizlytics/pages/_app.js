@@ -1,5 +1,6 @@
 import React from 'react'
 import App, { Container } from 'next/app'
+import nextCookie from 'next-cookies'
 
 import Header from '../components/Header'
 import Layout from '../components/MyLayout'
@@ -15,7 +16,7 @@ export default class MyApp extends App {
         }
 
         /* your own logic */
-        const token = auth(ctx);
+        const { token } = nextCookie(ctx);
         pageProps.is_logged = token !== undefined
 
         return { pageProps }

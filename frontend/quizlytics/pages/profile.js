@@ -5,7 +5,6 @@ import { auth } from '../utils/auth'
 import { api_path } from '../utils/api_path'
 
 const Profile = props => {
-  console.log("!", props)
   return (
     <div>
       <h1>Profile</h1>
@@ -39,7 +38,6 @@ Profile.getInitialProps = async ctx => {
 
   const url = api_path.users
   try {
-    // console.log(token)
     const response = await fetch(url, {
       // credentials: 'always',
       headers: {

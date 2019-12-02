@@ -42,8 +42,6 @@ class Login extends Component {
             })
             if (response.ok) {
                 const data = await response.json()
-                console.log("!!1")
-                console.log(data)
                 login(data)
 
                 Router.push('/profile')
@@ -124,14 +122,6 @@ class Login extends Component {
             </div>
         )
     }
-}
-
-Login.getInitialProps = async ctx => {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
-    const token = auth(ctx);
-    console.log("@@!", ctx)
-    return {}
 }
 
 export default Login
