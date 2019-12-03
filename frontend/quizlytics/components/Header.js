@@ -31,6 +31,9 @@ const Header = props => {
                 <Link href="/about">
                     <a style={linkStyle}>About</a>
                 </Link>
+                <Link href="/profile">
+                    <a style={linkStyle}>Profile</a>
+                </Link>
                 <Link href="/logout">
                     <a style={linkStyle}>Logout</a>
                 </Link>
