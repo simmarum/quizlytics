@@ -37,3 +37,31 @@ export const fetch_get = async (ctx, url, token) => {
         throw new Error(error)
     }
 }
+
+export const fetch_post = async (ctx, url, token, p_body) => {
+    console.log("%", url, get_auth_header(token))
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: get_auth_header(token),
+            body: p_body,
+        })
+        if (response.ok) {
+            const data = await response.json()
+            console.log("A#@", data)
+            return data
+        } else {
+            console.log('API POST failed.')
+            const data = await response.json()
+            if (ctx.setState) {
+                ctx.setState({ error: Object.entries(data) })
+            }
+        }
+    } catch (error) {
+        console.error(
+            'You have an error in your code or there are Network issues.',
+            error
+        )
+        throw new Error(error)
+    }
+}

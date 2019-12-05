@@ -2,7 +2,7 @@ import { Component } from 'react'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/MyLayout'
 import { login, auth } from '../utils/auth'
-import { api_path } from '../utils/api_path'
+import { api_path, fetch_post } from '../utils/api_path'
 import Router from 'next/router'
 
 
@@ -31,32 +31,11 @@ class Login extends Component {
         const email = this.state.email
         const password = this.state.password
         const url = api_path['token']
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password })
-            })
-            if (response.ok) {
-                const data = await response.json()
-                login(data)
-
-                Router.push('/profile')
-            } else {
-                console.log('Login failed.')
-                const data = await response.json()
-                this.setState({ error: Object.entries(data) })
-            }
-        } catch (error) {
-            console.error(
-                'You have an error in your code or there are Network issues.',
-                error
-            )
-            throw new Error(error)
-        }
+        const p_body = JSON.stringify({ email, password })
+        const api_data = fetch_post(this, url, null, p_body)
+        api_data.then(value => {
+            login(value)
+        })
     }
 
     render() {

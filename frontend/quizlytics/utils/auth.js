@@ -3,9 +3,15 @@ import cookie from "js-cookie";
 import Router from 'next/router'
 
 export const get_auth_header = (token) => {
-    return {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+    if ((token == null) || (typeof token == 'undefined')) {
+        return {
+            'Content-Type': 'application/json'
+        }
+    } else {
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
     }
 }
 const set_token = (token_pair) => {
@@ -13,14 +19,18 @@ const set_token = (token_pair) => {
     cookie.set('token_refresh', token_pair.refresh, { expires: 1 })
 }
 
-const remove_token = (token_pair) => {
+const remove_token = () => {
     cookie.remove('token')
     cookie.remove('token_refresh')
 }
 
 export const login = (token_pair) => {
-    set_token(token_pair)
-    Router.push('/profile')
+    if (typeof token_pair !== 'undefined') {
+        set_token(token_pair)
+        Router.push('/profile')
+    } else {
+        remove_token()
+    }
 }
 
 export const auth = ctx => {
