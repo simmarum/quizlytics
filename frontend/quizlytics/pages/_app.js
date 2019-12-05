@@ -4,7 +4,7 @@ import nextCookie from 'next-cookies'
 
 import Header from '../components/Header'
 import Layout from '../components/MyLayout'
-import { auth } from '../utils/auth'
+import { auth, get_token, verify_token } from '../utils/auth'
 
 export default class MyApp extends App {
     static async getInitialProps({ Component, router, ctx }) {
@@ -16,8 +16,9 @@ export default class MyApp extends App {
         }
 
         /* your own logic */
-        const { token } = nextCookie(ctx);
-        pageProps.is_logged = token !== undefined
+        const { token, token_refresh } = get_token()
+        const [is_logged, token_2] = await verify_token(token, token_refresh)
+        pageProps.is_logged = is_logged
 
         return { pageProps }
     }

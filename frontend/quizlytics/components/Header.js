@@ -1,13 +1,10 @@
 import Link from 'next/link';
-import nextCookie from 'next-cookies';
 
 const linkStyle = {
     marginRight: 15
 };
 
 const Header = props => {
-    console.log("@", props)
-
     if (!props.is_logged) {
         return (
             <div>

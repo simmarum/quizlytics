@@ -1,4 +1,4 @@
-import { get_auth_header } from '../utils/auth'
+import { get_auth_header } from './auth'
 
 const protocol = 'http'
 const host = '127.0.0.1'
@@ -8,7 +8,9 @@ const api_url = `${protocol}://${host}:${port}/api/`
 
 export const api_path = {
     'token': `${api_url}token/`,
-    'users': `${api_url}users/`
+    'token_verify': `${api_url}token/verify/`,
+    'token_refresh': `${api_url}refresh/`,
+    'users': `${api_url}users/`,
 }
 
 export const fetch_get = async (ctx, url, token) => {
@@ -39,7 +41,7 @@ export const fetch_get = async (ctx, url, token) => {
 }
 
 export const fetch_post = async (ctx, url, token, p_body) => {
-    console.log("%", url, get_auth_header(token))
+    console.log("%%%%%%", url, get_auth_header(token))
     try {
         const response = await fetch(url, {
             method: 'POST',

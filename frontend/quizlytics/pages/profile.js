@@ -53,7 +53,6 @@ class Profile extends Component {
       })
       if (response.ok) {
         const data = await response.json()
-        console.log("!@#", data)
       } else {
         console.log('Login failed.')
         const data = await response.json()
@@ -123,10 +122,9 @@ class Profile extends Component {
   static async getInitialProps(ctx) {
     // We use `nextCookie` to get the cookie and pass the token to the
     // frontend in the `props`.
-    const token = auth(ctx);
-
+    const token = await auth(ctx);
     const url = api_path.users
-    const api_data = fetch_get(
+    const api_data = await fetch_get(
       this,
       url,
       token
