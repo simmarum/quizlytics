@@ -15,17 +15,18 @@ class Profile extends Component {
     console.log("##", props.cities_data)
     const cities_data_sort = props.cities_data.sort((a, b) => (a.name > b.name) ? 1 : -1)
     this.state = {
+      token: props.token,
       email: user_profile.email,
+      url: user_profile.url,
       first_name: user_profile.first_name,
       last_name: user_profile.last_name,
-      city: user_profile.profile.city,
-      city_name: user_profile.profile.city_name,
+      city_id: user_profile.profile.city_id,
       cities_data: cities_data_sort,
       error: ''
     }
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
     this.handleChangeLastName = this.handleChangeLastName.bind(this)
-    this.handleChangeCityName = this.handleChangeCityName.bind(this)
+    this.handleChangeCityId = this.handleChangeCityId.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -37,23 +38,29 @@ class Profile extends Component {
     this.setState({ last_name: event.target.value })
   }
 
-  handleChangeCityName(event) {
-    this.setState({ city_name: event.target.value })
+  handleChangeCityId(event) {
+    this.setState({ city_id: event.target.value })
   }
 
   async handleSubmit(event) {
     event.preventDefault()
-    const first_name = this.state.first_name
-    const last_name = this.state.last_name
-    const url = api_path['token']
+    const url = this.state.url
+    const token = await auth(this);
+    const p_body = {
+      // "email": null,
+      // "password": null,
+      "first_name": this.state.first_name,
+      "last_name": this.state.last_name,
+      "profile": {
+        'city_id': this.state.city_id
+      }
+    }
 
     try {
       const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ first_name, last_name })
+        method: 'PATCH',
+        headers: get_auth_header(token),
+        body: JSON.stringify(p_body)
       })
       if (response.ok) {
         const data = await response.json()
@@ -103,10 +110,11 @@ class Profile extends Component {
               value={this.state.last_name}
               onChange={this.handleChangeLastName}
             />
-            <label htmlFor='city'>City</label>
+            <label htmlFor='city_id'>City</label>
             <select
-              id='city'
-              name='city'>
+              id='city_id'
+              name='city_id'
+              onChange={this.handleChangeCityId}>
               {this.state.cities_data.map(element =>
                 <option value={element.id}>{element.name}</option>
               )}
@@ -137,6 +145,7 @@ class Profile extends Component {
       null
     )
     return {
+      "token": token,
       "user_data": user_data,
       "cities_data": cities_data,
     }
