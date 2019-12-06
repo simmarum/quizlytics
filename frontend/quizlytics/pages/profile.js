@@ -13,13 +13,14 @@ class Profile extends Component {
     const user_profile = props.user_data.results[0]
     console.log("**", user_profile)
     console.log("##", props.cities_data)
+    const cities_data_sort = props.cities_data.sort((a, b) => (a.name > b.name) ? 1 : -1)
     this.state = {
       email: user_profile.email,
       first_name: user_profile.first_name,
       last_name: user_profile.last_name,
       city: user_profile.profile.city,
       city_name: user_profile.profile.city_name,
-      cities_data: props.cities_data,
+      cities_data: cities_data_sort,
       error: ''
     }
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
