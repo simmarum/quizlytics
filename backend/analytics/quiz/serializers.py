@@ -1,14 +1,15 @@
 from django.contrib.auth.models import Group
 from quiz.models import City, UserProfile, User
 from rest_framework import serializers
+from pprint import pprint
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    city_name = serializers.CharField(source='city.name', read_only=True)
+    city_id = serializers.CharField(source='city.id', read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = ('city', 'city_name')
+        fields = ('city_id',)
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -32,11 +33,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile_data = validated_data.pop('profile')
         profile = instance.profile
 
-        instance.email = validated_data.get('email', instance.email)
-        instance.save()
-
-        profile.city = profile_data.get('city', profile.city)
+        profile.city_id = profile_data.get('city_id', profile.city_id)
         profile.save()
+        instance.profile = profile
+
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+
+        instance.save()
 
         return instance
 

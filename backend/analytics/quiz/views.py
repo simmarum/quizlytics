@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from quiz.models import City, User
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
+from pprint import pprint
 
 
 class UserViewSet(viewsets.ModelViewSet):
