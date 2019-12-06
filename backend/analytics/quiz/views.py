@@ -15,11 +15,14 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         tmp_user = self.request.user
+        print(tmp_user, tmp_user.id)
         queryset = User.objects.all()
-        if tmp_user.is_superuser == 0:
-            queryset = queryset.filter(id=tmp_user.id)
-
-        return queryset
+        if tmp_user.is_superuser:
+            return queryset
+        if tmp_user.id is not None:
+            return queryset.filter(id=tmp_user.id)
+        else:
+            return queryset.filter(id=-1)
 
     def get_permissions(self):
         return get_permissions_login(cls=self)
