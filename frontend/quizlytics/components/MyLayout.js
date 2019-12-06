@@ -1,20 +1,20 @@
 import Header from './Header';
 
 const layoutStyle = {
-    margin: 20,
-    padding: 20,
-    border: '1px solid #DDD'
+  margin: 20,
+  padding: 20,
+  border: '1px solid #DDD'
 };
 
 const Layout = props => {
-    let header_pros = {}
-    header_pros.is_logged = props.is_logged
-    return (
-        <div>
-            <Header {...header_pros} />
-            {props.children}
+  let header_pros = {}
+  header_pros.is_logged = props.is_logged
+  return (
+    <div>
+      <Header {...header_pros} />
+      {props.children}
 
-            <style jsx global>{`
+      <style jsx global>{`
         .login, .user_profile{
           max-width: 340px;
           margin: 0 auto;
@@ -29,7 +29,7 @@ const Layout = props => {
         label {
           font-weight: 600;
         }
-        input {
+        input, select {
           padding: 8px;
           margin: 0.3rem 0 1rem;
           border: 1px solid #ccc;
@@ -47,8 +47,8 @@ const Layout = props => {
           display: block;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }
 
 export default Layout;

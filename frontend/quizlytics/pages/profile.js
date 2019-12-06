@@ -96,24 +96,17 @@ class Profile extends Component {
             />
             <label htmlFor='last_name'>Last Name</label>
             <input
-              type='last_name'
+              type='text'
               id='last_name'
               name='last_name'
               autoComplete='last_name'
               value={this.state.last_name}
               onChange={this.handleChangeLastName}
             />
-            <label htmlFor='city_name'>City Name</label>
-            <input
-              type='city_name'
-              id='city_name'
-              name='city_name'
-              autoComplete='city_name'
-              value={this.state.city_name}
-              onChange={this.handleChangeCityName}
-            />
-            <label htmlFor='city_name_select'>City Name Select</label>
-            <select name="city_name_select">
+            <label htmlFor='city'>City</label>
+            <select
+              id='city'
+              name='city'>
               {this.state.cities_data.map(element =>
                 <option value={element.id}>{element.name}</option>
               )}
