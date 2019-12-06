@@ -4,13 +4,15 @@ import nextCookie from 'next-cookies'
 import { Component } from 'react'
 import { auth, get_auth_header } from '../utils/auth'
 import { api_path, fetch_get } from '../utils/api_path'
+import { get_all_from_api } from '../utils/get_data'
 
 class Profile extends Component {
   constructor(props) {
     super(props)
 
-    const user_profile = props.results[0]
+    const user_profile = props.user_data.results[0]
     console.log("**", user_profile)
+    console.log("##", props.cities_data)
     this.state = {
       email: user_profile.email,
       first_name: user_profile.first_name,
@@ -123,13 +125,20 @@ class Profile extends Component {
     // We use `nextCookie` to get the cookie and pass the token to the
     // frontend in the `props`.
     const token = await auth(ctx);
-    const url = api_path.users
-    const api_data = await fetch_get(
+    const user_data = await fetch_get(
       this,
-      url,
+      api_path.users,
       token
     )
-    return api_data
+    const cities_data = await get_all_from_api(
+      this,
+      api_path.cities,
+      null
+    )
+    return {
+      "user_data": user_data,
+      "cities_data": cities_data,
+    }
   }
 }
 export default Profile

@@ -11,6 +11,7 @@ export const api_path = {
     'token_verify': `${api_url}token/verify/`,
     'token_refresh': `${api_url}refresh/`,
     'users': `${api_url}users/`,
+    'cities': `${api_url}cities/`,
 }
 
 export const fetch_get = async (ctx, url, token) => {
