@@ -19,6 +19,7 @@ class Profile extends Component {
       last_name: user_profile.last_name,
       city: user_profile.profile.city,
       city_name: user_profile.profile.city_name,
+      cities_data: props.cities_data,
       error: ''
     }
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
@@ -110,6 +111,12 @@ class Profile extends Component {
               value={this.state.city_name}
               onChange={this.handleChangeCityName}
             />
+            <label htmlFor='city_name_select'>City Name Select</label>
+            <select name="city_name_select">
+              {this.state.cities_data.map(element =>
+                <option value={element.id}>{element.name}</option>
+              )}
+            </select>
             <button type='submit'>Save</button>
 
             <p className={`error ${this.state.error && 'show'}`}>
