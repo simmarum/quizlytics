@@ -115,9 +115,14 @@ class Profile extends Component {
               id='city_id'
               name='city_id'
               onChange={this.handleChangeCityId}>
-              {this.state.cities_data.map(element =>
-                <option value={element.id}>{element.name}</option>
-              )}
+              {this.state.cities_data.map(function (element) {
+                if (element.id == this.state.city_id) {
+                  return <option value={element.id} selected="selected">{element.name}</option>;
+                } else {
+                  return <option value={element.id}>{element.name}</option>;
+                }
+              }.bind(this))
+              }
             </select>
             <button type='submit'>Save</button>
 
