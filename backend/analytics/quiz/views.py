@@ -44,5 +44,8 @@ class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
 
+    def get_queryset(self):
+        return City.objects.all().order_by('id')
+
     def get_permissions(self):
         return get_permissions_admin(cls=self)
