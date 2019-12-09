@@ -11,8 +11,6 @@ class Profile extends Component {
     super(props)
 
     const user_profile = props.user_data.results[0]
-    console.log("**", user_profile)
-    console.log("##", props.cities_data)
     const cities_data_sort = props.cities_data.sort((a, b) => (a.name > b.name) ? 1 : -1)
     this.state = {
       token: props.token,

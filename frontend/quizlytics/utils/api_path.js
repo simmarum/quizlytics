@@ -15,7 +15,6 @@ export const api_path = {
 }
 
 export const fetch_get = async (ctx, url, token) => {
-    console.log("%", url, get_auth_header(token))
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -23,10 +22,9 @@ export const fetch_get = async (ctx, url, token) => {
         })
         if (response.ok) {
             const data = await response.json()
-            console.log("!@#", data)
             return data
         } else {
-            console.log('Login failed.')
+            console.log('Request GET failed: ' + url)
             const data = await response.json()
             if (ctx.setState) {
                 ctx.setState({ error: Object.entries(data) })
@@ -42,7 +40,6 @@ export const fetch_get = async (ctx, url, token) => {
 }
 
 export const fetch_post = async (ctx, url, token, p_body) => {
-    console.log("%%%%%%", url, get_auth_header(token))
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -51,10 +48,9 @@ export const fetch_post = async (ctx, url, token, p_body) => {
         })
         if (response.ok) {
             const data = await response.json()
-            console.log("A#@", data)
             return data
         } else {
-            console.log('API POST failed.')
+            console.log('Request POST failed: ' + url)
             const data = await response.json()
             if (ctx.setState) {
                 ctx.setState({ error: Object.entries(data) })

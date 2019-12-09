@@ -52,7 +52,6 @@ export const login = (token_pair) => {
 export const verify_token = async (token, refresh) => {
     if ((typeof token !== 'undefined') && (typeof refresh !== 'undefined')) {
         try {
-            console.log("^&&&", token)
             const url = api_path['token_verify']
             const p_body = JSON.stringify({ token })
             const response = await fetch(url, {
@@ -101,12 +100,9 @@ export const verify_token = async (token, refresh) => {
 export const auth = async (ctx) => {
     const { token, token_refresh } = nextCookie(ctx)
     const [is_token_validate, token_2] = await verify_token(token, token_refresh)
-    console.log("%$#^", is_token_validate, token_2)
     // If there's no token, it means the user is not logged in.
     if (is_token_validate == false) {
-        // remove_token()
         if (ctx.req) {
-            console.log("BB", ctx.req.url)
             if (ctx.req.url != '/login') {
                 ctx.res.writeHead(302, { Location: '/login' })
                 ctx.res.end()
@@ -114,7 +110,6 @@ export const auth = async (ctx) => {
             }
         }
         else {
-            console.log("AA", Router.pathname)
             if (Router.pathname != '/login') {
                 Router.push('/login')
             }
@@ -123,18 +118,6 @@ export const auth = async (ctx) => {
     } else {
         return token_2
     }
-    // else {
-    //     if (ctx.req) {
-    //         if (ctx.req.url == '/login') {
-    //             ctx.res.writeHead(302, { Location: '/index' })
-    //             ctx.res.end()
-    //             return
-    //         }
-    //     } else {
-    //         Router.push('/index')
-    //     }
-    // }
-    return token
 }
 
 export const logout = () => {
