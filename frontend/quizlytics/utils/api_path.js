@@ -64,3 +64,29 @@ export const fetch_post = async (ctx, url, token, p_body) => {
         throw new Error(error)
     }
 }
+
+export const fetch_patch = async (ctx, url, token, p_body) => {
+    try {
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: get_auth_header(token),
+            body: p_body,
+        })
+        if (response.ok) {
+            const data = await response.json()
+            return data
+        } else {
+            console.log('Request PATCH failed: ' + url)
+            const data = await response.json()
+            if (ctx.setState) {
+                ctx.setState({ error: Object.entries(data) })
+            }
+        }
+    } catch (error) {
+        console.error(
+            'You have an error in your code or there are Network issues.',
+            error
+        )
+        throw new Error(error)
+    }
+}

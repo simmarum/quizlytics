@@ -3,7 +3,7 @@ import Layout from '../components/MyLayout'
 import nextCookie from 'next-cookies'
 import { Component } from 'react'
 import { auth, get_auth_header } from '../utils/auth'
-import { api_path, fetch_get } from '../utils/api_path'
+import { api_path, fetch_get, fetch_patch } from '../utils/api_path'
 import { get_all_from_api } from '../utils/get_data'
 
 class Profile extends Component {
@@ -44,36 +44,19 @@ class Profile extends Component {
     event.preventDefault()
     const url = this.state.url
     const token = await auth(this);
-    const p_body = {
-      // "email": null,
-      // "password": null,
+    const p_body = JSON.stringify({
       "first_name": this.state.first_name,
       "last_name": this.state.last_name,
       "profile": {
         'city_id': this.state.city_id
       }
-    }
-
-    try {
-      const response = await fetch(url, {
-        method: 'PATCH',
-        headers: get_auth_header(token),
-        body: JSON.stringify(p_body)
-      })
-      if (response.ok) {
-        const data = await response.json()
-      } else {
-        console.log('Login failed.')
-        const data = await response.json()
-        this.setState({ error: Object.entries(data) })
-      }
-    } catch (error) {
-      console.error(
-        'You have an error in your code or there are Network issues.',
-        error
-      )
-      throw new Error(error)
-    }
+    })
+    const user_data = await fetch_patch(
+      this,
+      url,
+      token,
+      p_body
+    )
   }
 
   render() {
