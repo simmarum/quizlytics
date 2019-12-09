@@ -117,9 +117,18 @@ class Profile extends Component {
               onChange={this.handleChangeCityId}>
               {this.state.cities_data.map(function (element) {
                 if (element.id == this.state.city_id) {
-                  return <option value={element.id} selected="selected">{element.name}</option>;
+                  return <option
+                    key={element.id}
+                    value={element.id}
+                    selected="selected">
+                    {element.name}
+                  </option>;
                 } else {
-                  return <option value={element.id}>{element.name}</option>;
+                  return <option
+                    key={element.id}
+                    value={element.id}>
+                    {element.name}
+                  </option>;
                 }
               }.bind(this))
               }
