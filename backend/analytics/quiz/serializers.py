@@ -30,7 +30,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        profile_data = validated_data.pop('profile')
+        profile_data = self.initial_data['profile']
         profile = instance.profile
 
         profile.city_id = profile_data.get('city_id', profile.city_id)
