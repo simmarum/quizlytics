@@ -114,22 +114,15 @@ class Profile extends Component {
             <select
               id='city_id'
               name='city_id'
+              value={this.state.city_id}
               onChange={this.handleChangeCityId}>
               {this.state.cities_data.map(function (element) {
-                if (element.id == this.state.city_id) {
-                  return <option
-                    key={element.id}
-                    value={element.id}
-                    selected="selected">
-                    {element.name}
-                  </option>;
-                } else {
-                  return <option
-                    key={element.id}
-                    value={element.id}>
-                    {element.name}
-                  </option>;
-                }
+                return <option
+                  key={element.id}
+                  value={element.id}>
+                  {element.name}
+                </option>;
+
               }.bind(this))
               }
             </select>
