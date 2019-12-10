@@ -63,6 +63,7 @@ class Profile extends Component {
     return (
       <div>
         <div className='user_profile'>
+          <div className='tt'>Profile</div>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='email'>Email</label>
             <input

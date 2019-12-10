@@ -22,6 +22,11 @@ const Layout = props => {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
+        .tt {
+          font-weight: 600;
+          font-size: 2rem;
+          margin: 1rem;
+        }
         form {
           display: flex;
           flex-flow: column;

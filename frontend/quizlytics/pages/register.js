@@ -73,6 +73,7 @@ class Register extends Component {
         return (
             <div>
                 <div className='register'>
+                    <div className='tt'>Register</div>
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor='email'>E-mail</label>
                         <input
