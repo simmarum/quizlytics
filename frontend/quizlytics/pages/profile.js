@@ -110,9 +110,9 @@ class Profile extends Component {
             </select>
             <button type='submit'>Save</button>
 
-            <p className={`error ${this.state.error && 'show'}`}>
-              {this.state.error && `${this.state.error}`}
-            </p>
+            <pre className={`error ${this.state.error && 'show'}`}>
+              {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
+            </pre>
           </form>
         </div>
       </div>
