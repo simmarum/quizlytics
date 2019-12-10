@@ -13,9 +13,15 @@ class City(models.Model):
 
 class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    extra_kwargs = {
+        'first_name': {'required': True},
+        'last_name': {'required': True}
+    }
 
     def __str__(self):
         return "{}".format(self.email)
