@@ -1,4 +1,6 @@
 from django.contrib.auth.models import Group
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from quiz.models import City, UserProfile, User
 from rest_framework import serializers
 from pprint import pprint
@@ -20,6 +22,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'email', 'first_name', 'last_name', 'password', 'profile')
         extra_kwargs = {'password': {'write_only': True}}
 
+    def validate_password(self, value):
+        try:
+            validate_password(value)
+        except ValidationError as exc:
+            raise serializers.ValidationError(str(exc))
+        return value
+
     def create(self, validated_data):
         profile_data = self.initial_data['profile']
         validated_data.pop('profile')
@@ -32,6 +41,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         )
 
         user = User(**validated_data)
+        validate_password(password, user)
         user.set_password(password)
         user.save()
 

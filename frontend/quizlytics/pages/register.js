@@ -63,7 +63,9 @@ class Register extends Component {
             { email, first_name, last_name, password, 'profile': { city_id } }
         )
         const api_data = await fetch_post(this, url, null, p_body)
-        Router.push('/login')
+        if (typeof api_data !== 'undefined') {
+            Router.push('/login')
+        }
 
     }
 
