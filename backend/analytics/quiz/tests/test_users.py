@@ -98,7 +98,7 @@ class TestUsersApi(TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_create_invalid_user_password_too_short(self):
-        valid_payload = {
+        invalid_payload = {
             "email": '3@3.pl',
             "first_name": '3',
             "last_name": '3',
@@ -109,7 +109,7 @@ class TestUsersApi(TestCase):
             }
         }
         response = self.client.post(reverse('users-list'),
-                                    data=json.dumps(valid_payload),
+                                    data=json.dumps(invalid_payload),
                                     content_type='application/json'
                                     )
         res_data = response.json()
@@ -118,7 +118,7 @@ class TestUsersApi(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_password_too_short(self):
-        valid_payload = {
+        invalid_payload = {
             "email": '3@3.pl',
             "first_name": '3',
             "last_name": '3',
@@ -129,7 +129,7 @@ class TestUsersApi(TestCase):
             }
         }
         response = self.client.post(reverse('users-list'),
-                                    data=json.dumps(valid_payload),
+                                    data=json.dumps(invalid_payload),
                                     content_type='application/json'
                                     )
         res_data = response.json()
@@ -138,7 +138,7 @@ class TestUsersApi(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_password_is_numeric(self):
-        valid_payload = {
+        invalid_payload = {
             "email": '3@3.pl',
             "first_name": '3',
             "last_name": '3',
@@ -149,7 +149,7 @@ class TestUsersApi(TestCase):
             }
         }
         response = self.client.post(reverse('users-list'),
-                                    data=json.dumps(valid_payload),
+                                    data=json.dumps(invalid_payload),
                                     content_type='application/json'
                                     )
         res_data = response.json()
@@ -158,7 +158,7 @@ class TestUsersApi(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_password_too_common(self):
-        valid_payload = {
+        invalid_payload = {
             "email": '3@3.pl',
             "first_name": '3',
             "last_name": '3',
@@ -169,7 +169,7 @@ class TestUsersApi(TestCase):
             }
         }
         response = self.client.post(reverse('users-list'),
-                                    data=json.dumps(valid_payload),
+                                    data=json.dumps(invalid_payload),
                                     content_type='application/json'
                                     )
         res_data = response.json()
@@ -178,7 +178,7 @@ class TestUsersApi(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_other_params(self):
-        valid_payload = {
+        invalid_payload = {
             "email": '3',
             "first_name": '',
             "last_name": '',
@@ -187,7 +187,7 @@ class TestUsersApi(TestCase):
             "profile": ''
         }
         response = self.client.post(reverse('users-list'),
-                                    data=json.dumps(valid_payload),
+                                    data=json.dumps(invalid_payload),
                                     content_type='application/json'
                                     )
         res_data = response.json()
