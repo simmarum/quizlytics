@@ -34,10 +34,10 @@ class TestUsersApi(TestCase):
             password='2',
             profile=UserProfile.objects.all().filter(user_id=2).first())
         City.objects.create(
-            name="Other"
+            name='Other'
         )
         City.objects.create(
-            name="New"
+            name='New'
         )
 
     def test_users_list_all_admin(self):
@@ -95,13 +95,13 @@ class TestUsersApi(TestCase):
 
     def test_create_valid_user(self):
         valid_payload = {
-            "email": '3@3.pl',
-            "first_name": '3',
-            "last_name": '3',
-            "username": '3_3',
-            "password": '!QAZXSW@',
-            "profile": {
-                "city_id": 1
+            'email': '3@3.pl',
+            'first_name': '3',
+            'last_name': '3',
+            'username': '3_3',
+            'password': '!QAZXSW@',
+            'profile': {
+                'city_id': 1
             }
         }
         response = self.client.post(reverse('users-list'),
@@ -112,13 +112,13 @@ class TestUsersApi(TestCase):
 
     def test_create_invalid_user_password_too_short(self):
         invalid_payload = {
-            "email": '3@3.pl',
-            "first_name": '3',
-            "last_name": '3',
-            "username": '3_3',
-            "password": '@Sd',
-            "profile": {
-                "city_id": 1
+            'email': '3@3.pl',
+            'first_name': '3',
+            'last_name': '3',
+            'username': '3_3',
+            'password': '@Sd',
+            'profile': {
+                'city_id': 1
             }
         }
         response = self.client.post(reverse('users-list'),
@@ -127,18 +127,18 @@ class TestUsersApi(TestCase):
                                     )
         res_data = response.json()
 
-        self.assertIn("This password is too short", res_data['password'][0])
+        self.assertIn('This password is too short', res_data['password'][0])
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_password_too_short(self):
         invalid_payload = {
-            "email": '3@3.pl',
-            "first_name": '3',
-            "last_name": '3',
-            "username": '3_3',
-            "password": '@Sd',
-            "profile": {
-                "city_id": 1
+            'email': '3@3.pl',
+            'first_name': '3',
+            'last_name': '3',
+            'username': '3_3',
+            'password': '@Sd',
+            'profile': {
+                'city_id': 1
             }
         }
         response = self.client.post(reverse('users-list'),
@@ -147,18 +147,18 @@ class TestUsersApi(TestCase):
                                     )
         res_data = response.json()
 
-        self.assertIn("This password is too short", res_data['password'][0])
+        self.assertIn('This password is too short', res_data['password'][0])
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_password_is_numeric(self):
         invalid_payload = {
-            "email": '3@3.pl',
-            "first_name": '3',
-            "last_name": '3',
-            "username": '3_3',
-            "password": '1029384',
-            "profile": {
-                "city_id": 1
+            'email': '3@3.pl',
+            'first_name': '3',
+            'last_name': '3',
+            'username': '3_3',
+            'password': '1029384',
+            'profile': {
+                'city_id': 1
             }
         }
         response = self.client.post(reverse('users-list'),
@@ -167,18 +167,18 @@ class TestUsersApi(TestCase):
                                     )
         res_data = response.json()
 
-        self.assertIn("This password is entirely numeric.", res_data['password'][0])
+        self.assertIn('This password is entirely numeric.', res_data['password'][0])
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_password_too_common(self):
         invalid_payload = {
-            "email": '3@3.pl',
-            "first_name": '3',
-            "last_name": '3',
-            "username": '3_3',
-            "password": 'qwerty',
-            "profile": {
-                "city_id": 1
+            'email': '3@3.pl',
+            'first_name': '3',
+            'last_name': '3',
+            'username': '3_3',
+            'password': 'qwerty',
+            'profile': {
+                'city_id': 1
             }
         }
         response = self.client.post(reverse('users-list'),
@@ -187,17 +187,17 @@ class TestUsersApi(TestCase):
                                     )
         res_data = response.json()
 
-        self.assertIn("This password is too common", res_data['password'][0])
+        self.assertIn('This password is too common', res_data['password'][0])
         self.assertEqual(response.status_code, 400)
 
     def test_create_invalid_user_other_params(self):
         invalid_payload = {
-            "email": '3',
-            "first_name": '',
-            "last_name": '',
-            "username": '',
-            "password": 'ASD#rfw#2FSA',
-            "profile": ''
+            'email': '3',
+            'first_name': '',
+            'last_name': '',
+            'username': '',
+            'password': 'ASD#rfw#2FSA',
+            'profile': ''
         }
         response = self.client.post(reverse('users-list'),
                                     data=json.dumps(invalid_payload),
@@ -221,9 +221,9 @@ class TestUsersApi(TestCase):
         self.client.force_authenticate(user)
 
         valid_payload = {
-            "first_name": 'new',
-            "last_name": 'new',
-            "profile": {
+            'first_name': 'new',
+            'last_name': 'new',
+            'profile': {
                 'city_id': 2
             }
         }
