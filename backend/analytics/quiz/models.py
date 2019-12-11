@@ -15,13 +15,10 @@ class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    username = models.CharField(max_length=120, blank=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
-    extra_kwargs = {
-        'first_name': {'required': True},
-        'last_name': {'required': True}
-    }
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
         return "{}".format(self.email)
