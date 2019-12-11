@@ -1,7 +1,7 @@
 from rest_framework.test import APIClient, force_authenticate
 from django.test import TestCase
 from django.urls import reverse
-from quiz.models import User, City
+from quiz.models import User, City, UserProfile
 import json
 from django.db.utils import IntegrityError
 from django.db import transaction
@@ -11,20 +11,33 @@ class TestUsersApi(TestCase):
 
     def setUp(self):
         self.client = APIClient()
+        UserProfile.objects.create(
+            user_id=1,
+            city_id=1
+        )
+        UserProfile.objects.create(
+            user_id=2,
+            city_id=1
+        )
         User.objects.create_superuser(
             email='1@1.pl',
             first_name='1',
             last_name='1',
             username='1_1',
-            password='1')
+            password='1',
+            profile=UserProfile.objects.all().filter(user_id=1).first())
         User.objects.create(
             email='2@2.pl',
             first_name='2',
             last_name='2',
             username='2_2',
-            password='2')
+            password='2',
+            profile=UserProfile.objects.all().filter(user_id=2).first())
         City.objects.create(
-            name="Inne"
+            name="Other"
+        )
+        City.objects.create(
+            name="New"
         )
 
     def test_users_list_all_admin(self):
@@ -202,3 +215,30 @@ class TestUsersApi(TestCase):
         }
         self.assertEqual(assert_response, res_data)
         self.assertEqual(response.status_code, 400)
+
+    def test_update_valid_user(self):
+        user = User.objects.all().filter(id=2).first()
+        self.client.force_authenticate(user)
+
+        valid_payload = {
+            "first_name": 'new',
+            "last_name": 'new',
+            "profile": {
+                'city_id': 2
+            }
+        }
+        response = self.client.patch(reverse('users-detail', kwargs={'pk': 2}),
+                                     data=json.dumps(valid_payload),
+                                     content_type='application/json'
+                                     )
+        res_data = response.json()
+
+        assert_response = {
+            'email': '2@2.pl',
+            'first_name': 'new',
+            'last_name': 'new',
+            'profile': {'city_id': '2'},
+            'url': 'http://testserver/api/users/2/'
+        }
+        self.assertEqual(assert_response, res_data)
+        self.assertEqual(response.status_code, 200)
