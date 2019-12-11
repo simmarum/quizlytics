@@ -24,27 +24,52 @@ class TestUsersApi(TestCase):
     def test_users_list_all_admin(self):
         user = User.objects.all().filter(id=1).first()
         self.client.force_authenticate(user)
-        # get API response
+
         response = self.client.get(reverse('users-list'))
         res_data = response.json()
-        # assert
+
         self.assertEqual(response.status_code, 200)
         self.assertEqual(res_data['count'], 2)
 
     def test_users_list_normal_user(self):
         user = User.objects.all().filter(id=2).first()
         self.client.force_authenticate(user)
-        # get API response
+
         response = self.client.get(reverse('users-list'))
         res_data = response.json()
-        # assert
+
         self.assertEqual(response.status_code, 200)
         self.assertEqual(res_data['count'], 1)
 
     def test_users_list_no_user(self):
-        # get API response
         response = self.client.get(reverse('users-list'))
         res_data = response.json()
-        # assert
+
         self.assertEqual(response.status_code, 200)
         self.assertEqual(res_data['count'], 0)
+
+    def test_get_valid_single_user(self):
+        user = User.objects.all().filter(id=2).first()
+        self.client.force_authenticate(user)
+
+        response = self.client.get(reverse('users-detail', kwargs={'pk': 2}))
+        res_data = response.json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(res_data['email'], '2@2.pl')
+
+    def test_get_invalid_single_user(self):
+        user = User.objects.all().filter(id=2).first()
+        self.client.force_authenticate(user)
+
+        response = self.client.get(reverse('users-detail', kwargs={'pk': -1}))
+        res_data = response.json()
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_get_valid_single_user_no_login(self):
+
+        response = self.client.get(reverse('users-detail', kwargs={'pk': 1}))
+        res_data = response.json()
+
+        self.assertEqual(response.status_code, 404)
