@@ -16,6 +16,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer(required=True)
+    url = serializers.HyperlinkedIdentityField(view_name="users-detail")
 
     class Meta:
         model = User
