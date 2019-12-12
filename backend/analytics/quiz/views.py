@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from pprint import pprint
 from rest_framework import viewsets, mixins
+from django_filters import rest_framework as filters
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -61,6 +62,8 @@ class QuestionViewSet(mixins.CreateModelMixin,
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('owner_id',)
 
     def get_queryset(self):
         return Question.objects.all().order_by('title')

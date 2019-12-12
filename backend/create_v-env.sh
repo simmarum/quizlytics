@@ -21,4 +21,5 @@ pygments==2.5.2 \
 django-rest-auth==0.9.5 \
 djangorestframework_simplejwt==4.4.0 \
 django-cors-headers==3.2.0 \
+django-filter==2.2.0 \
 coreapi==2.3.3
