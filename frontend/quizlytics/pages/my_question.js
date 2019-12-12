@@ -4,8 +4,8 @@ import nextCookie from 'next-cookies'
 import { Component } from 'react'
 import Link from 'next/link';
 import { auth, get_auth_header } from '../utils/auth'
-import { api_path, fetch_get, fetch_patch } from '../utils/api_path'
-import { get_all_from_api } from '../utils/get_data'
+import { api_path, fetch_get, fetch_patch, encodeQueryData } from '../utils/api_path'
+import { get_all_from_api, get_user_id_from_api } from '../utils/get_data'
 
 class MyQuestion extends Component {
   constructor(props) {
@@ -59,8 +59,14 @@ class MyQuestion extends Component {
     // We use `nextCookie` to get the cookie and pass the token to the
     // frontend in the `props`.
     const token = await auth(ctx);
+    const user_id = await get_user_id_from_api(ctx, token);
+    const query = encodeQueryData({ "owner_id": user_id })
+    const url = api_path['questions'] + "?" + query
+    const questions = await get_all_from_api(ctx, url, token)
+    console.log(questions)
     return {
       "token": token,
+      "user_id": user_id,
     }
   }
 }

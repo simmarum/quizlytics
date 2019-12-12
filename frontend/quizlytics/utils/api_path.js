@@ -15,6 +15,13 @@ export const api_path = {
   'questions': `${api_url}questions/`,
 }
 
+export function encodeQueryData(data) {
+  const ret = [];
+  for (let d in data)
+    ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+  return ret.join('&');
+}
+
 export const fetch_get = async (ctx, url, token) => {
   try {
     const response = await fetch(url, {
