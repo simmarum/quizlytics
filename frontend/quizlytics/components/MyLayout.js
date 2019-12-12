@@ -55,6 +55,9 @@ const Layout = props => {
           font-size: 2rem;
           margin: 1rem;
         }
+        .question {
+          margin: 0.5rem 0 0.5rem 1rem;
+        }
         form {
           display: flex;
           flex-flow: column;

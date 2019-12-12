@@ -46,6 +46,7 @@ class MyQuestionCreate extends Component {
     tb.innerHTML = "Remove"
 
     var ti = document.createElement('input');
+    ti.setAttribute("class", "question");
     ti.type = "text"
     ti.id = `aa_${new_id}`
     ti.innerHTML = `Answer ${new_id}`
@@ -69,6 +70,7 @@ class MyQuestionCreate extends Component {
               type='text'
               id='q_title'
               name='q_title'
+              className="question"
             />
           </div>
           <div id='q_answers'>
