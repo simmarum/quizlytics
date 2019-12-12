@@ -95,6 +95,22 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ('title',)
 
+    def validate_answers(self, value):
+        if len(value) < 1:
+            raise serializers.ValidationError({
+                'answers': 'This field is required.'
+            })
+        if not isinstance(value, list):
+            raise serializers.ValidationError({
+                'answers': 'This field should be list is /{}/'.format(type(value))
+            })
+        if len([1 for e in value if not isinstance(e, dict)]) > 0:
+            raise serializers.ValidationError({
+                'answers': 'List should contains /dict/ as elements'
+            })
+
+        return value
+
     def create(self, validated_data):
         m_uid = Question.objects.all().aggregate(Max('uid')).get('uid__max')
         m_version = Question.objects.all().aggregate(Max('version')).get('version__max')
@@ -103,12 +119,15 @@ class QuestionSerializer(serializers.ModelSerializer):
         m_version = 1 if m_version is None else m_version+1
 
         answers = self.initial_data['answers']
+        answers = self.validate_answers(answers)
         question = Question(uid=m_uid, version=m_version, **validated_data)
         question.save()
-        print("###")
         for one_answer in answers:
-            print("@", one_answer)
             q_answer = QuestionAnswer(question=question, **one_answer)
+            try:
+                q_answer.full_clean()
+            except ValidationError as exc:
+                raise serializers.ValidationError(exc.message_dict)
             q_answer.save()
 
         # profile_data = self.initial_data['profile']
