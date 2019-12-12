@@ -1,13 +1,8 @@
-import fetch from 'isomorphic-unfetch'
-import Layout from '../components/MyLayout'
-import nextCookie from 'next-cookies'
 import { Component } from 'react'
-import Link from 'next/link';
-import { auth, get_auth_header } from '../utils/auth'
-import { api_path, fetch_get, fetch_patch } from '../utils/api_path'
-import { get_all_from_api } from '../utils/get_data'
+import { auth, get_auth_header } from '../../utils/auth'
+import { api_path, fetch_get, fetch_patch } from '../../utils/api_path'
 
-class MyQuestion extends Component {
+class MyQuestionCreate extends Component {
   constructor(props) {
     super(props)
 
@@ -41,12 +36,7 @@ class MyQuestion extends Component {
     return (
       <div>
         <div className='my_question'>
-          <div className='tt'>My Questions</div>
-          <div>
-            <Link href="/question/create">
-              <a>Create</a>
-            </Link>
-          </div>
+          <div className='tt'>My Questions - create</div>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>
@@ -64,4 +54,4 @@ class MyQuestion extends Component {
     }
   }
 }
-export default MyQuestion
+export default MyQuestionCreate
