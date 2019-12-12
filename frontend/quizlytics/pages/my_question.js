@@ -13,12 +13,36 @@ class MyQuestion extends Component {
 
     this.state = {
       token: props.token,
-      questions: props.questions,
+      questions_next: props.questions.next,
+      questions: props.questions.results,
       error: ''
     }
+    this.load_more_questions = this.load_more_questions.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  async load_more_questions() {
+    console.log("#@#", this)
+    const url = this.state.questions_next
+    const token = this.state.token
+    var questions = this.state.questions
+
+    const new_questions = await fetch_get(
+      this,
+      this.state.questions_next,
+      this.state.token
+    )
+    questions = questions.concat(new_questions.results)
+    var load_button = document.getElementById('load_more_questions')
+    if (new_questions.next == null) {
+      load_button.disabled = true
+    } else {
+      load_button.disabled = false
+    }
+    this.setState({ "questions_next": new_questions.next })
+    this.setState({ "questions": questions })
+
+  }
   async handleSubmit(event) {
     event.preventDefault()
     const url = this.state.url
@@ -43,7 +67,7 @@ class MyQuestion extends Component {
       <div>
         <div className='my_question'>
           <div className='tt'>My Questions</div>
-          <div>
+          <div className="question">
             <Link href="/question/create">
               <a>Create</a>
             </Link>
@@ -55,6 +79,9 @@ class MyQuestion extends Component {
               </div>;
             }.bind(this))
             }
+          </div>
+          <div className="question">
+            <button id="load_more_questions" onClick={this.load_more_questions}>Load more ...</button>
           </div>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
@@ -71,7 +98,12 @@ class MyQuestion extends Component {
     const user_id = await get_user_id_from_api(ctx, token);
     const query = encodeQueryData({ "owner_id": user_id })
     const url = api_path['questions'] + "?" + query
-    const questions = await get_all_from_api(ctx, url, token)
+    // const questions = await get_all_from_api(ctx, url, token)
+    const questions = await fetch_get(
+      ctx,
+      url,
+      token,
+    )
     return {
       "token": token,
       "questions": questions

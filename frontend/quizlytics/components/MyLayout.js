@@ -38,6 +38,7 @@ const Layout = props => {
         }
         .question_row:nth-child(even) {background: #BBB}
         .question_row:nth-child(odd) {background: #EEE}
+
         .header {
           margin: 0 auto;
           padding: 1rem;
@@ -57,6 +58,11 @@ const Layout = props => {
         a:active, button:active {
           box-shadow: none;
           top: 5px;
+        }
+        button:disabled,
+        button[disabled] {
+          background-color: #444444;
+
         }
         .tt {
           font-weight: 600;
