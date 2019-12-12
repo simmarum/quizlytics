@@ -27,3 +27,19 @@ class User(AbstractUser):
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
     city = models.ForeignKey(City, on_delete=models.PROTECT)
+
+
+class Question(models.Model):
+    uid = models.IntegerField()
+    version = models.IntegerField()
+    title = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = (("uid", "version"),)
+    pass
+
+
+class QuestionAnswer(models.Model):
+    question_id = models.ForeignKey(Question, on_delete=models.PROTECT)
+    answer_number = models.IntegerField()
+    answer_text = models.CharField(max_length=500)
