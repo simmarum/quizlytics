@@ -36,10 +36,12 @@ class Question(models.Model):
 
     class Meta:
         unique_together = (("uid", "version"),)
-    pass
+
+    def __str__(self):
+        return f"uid={self.uid}, version={self.version}, title={self.title}\n"
 
 
 class QuestionAnswer(models.Model):
-    question_id = models.ForeignKey(Question, on_delete=models.PROTECT)
+    question = models.ForeignKey(Question, on_delete=models.PROTECT)
     answer_number = models.IntegerField()
     answer_text = models.CharField(max_length=500)

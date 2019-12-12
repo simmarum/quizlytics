@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from quiz.models import City, UserProfile, User, QuestionAnswer, Question
 from rest_framework import serializers
 from pprint import pprint
+from django.db.models import Max
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -84,24 +85,32 @@ class CitySerializer(serializers.HyperlinkedModelSerializer):
 class QuestionAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionAnswer
-        fields = '__all__'
+        fields = ('answer_number', 'answer_text')
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    answers = QuestionAnswerSerializer(required=True, many=True)
+    # answers = QuestionAnswerSerializer(required=True, many=True)
 
     class Meta:
         model = Question
-        fields = ('title', 'answers')
+        fields = ('title',)
 
     def create(self, validated_data):
-        m_uid = Question.objects.all().aggregate(Max('uid')).get('uid')
-        m_version = Question.objects.all().aggregate(Max('version')).get('version')
+        m_uid = Question.objects.all().aggregate(Max('uid')).get('uid__max')
+        m_version = Question.objects.all().aggregate(Max('version')).get('version__max')
 
         m_uid = 1 if m_uid is None else m_uid+1
         m_version = 1 if m_version is None else m_version+1
 
-        pprint(validated_data)
+        answers = self.initial_data['answers']
+        question = Question(uid=m_uid, version=m_version, **validated_data)
+        question.save()
+        print("###")
+        for one_answer in answers:
+            print("@", one_answer)
+            q_answer = QuestionAnswer(question=question, **one_answer)
+            q_answer.save()
+
         # profile_data = self.initial_data['profile']
         # validated_data.pop('profile')
 
@@ -118,4 +127,4 @@ class QuestionSerializer(serializers.ModelSerializer):
         # user.save()
 
         # UserProfile.objects.create(user=user, **profile_data)
-        # return user
+        return question
