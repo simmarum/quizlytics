@@ -1,23 +1,51 @@
 import { Component } from 'react'
 import { auth, get_auth_header } from '../../utils/auth'
-import { api_path, fetch_get, fetch_patch } from '../../utils/api_path'
+import { api_path, fetch_get, fetch_patch, fetch_post } from '../../utils/api_path'
 
 class MyQuestionCreate extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      q_title: '',
       token: props.token,
       error: ''
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChangeQTitle = this.handleChangeQTitle.bind(this)
+    this.save_question = this.save_question.bind(this)
   }
 
-  async handleSubmit(event) {
+  handleChangeQTitle(event) {
+    this.setState({ q_title: event.target.value })
+  }
+  async save_question(event) {
     event.preventDefault()
-    const url = this.state.url
+    const title = this.state.q_title
+    const url = api_path['questions']
     const token = await auth(this);
 
+    var all_answers = document.getElementsByClassName("q_answer");
+    var i = 0;
+    var j = all_answers.length
+    var answers = []
+    for (; i < j; i++) {
+      answers.push({
+        'answer_number': i + 1,
+        'answer_text': all_answers[i].getElementsByTagName('input')[0].value,
+      })
+    }
+    console.log(answers)
+    const p_body = JSON.stringify({
+      "title": title,
+      "answers": answers
+    })
+    const user_data = await fetch_post(
+      this,
+      url,
+      token,
+      p_body
+    )
+    console.log(user_data)
   }
 
   add_answer() {
@@ -63,6 +91,7 @@ class MyQuestionCreate extends Component {
           <div className='tt'>My Questions - create</div>
           <div>
             <button onClick={this.add_answer}>Add answer</button>
+            <button onClick={this.save_question}>Save question</button>
           </div>
           <div id='q_title'>
             <label htmlFor='q_title'>Question title</label>
@@ -71,6 +100,8 @@ class MyQuestionCreate extends Component {
               id='q_title'
               name='q_title'
               className="question"
+              value={this.state.q_title}
+              onChange={this.handleChangeQTitle}
             />
           </div>
           <div id='q_answers'>

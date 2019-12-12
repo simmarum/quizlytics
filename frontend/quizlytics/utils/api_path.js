@@ -12,6 +12,7 @@ export const api_path = {
   'token_refresh': `${api_url}refresh/`,
   'users': `${api_url}users/`,
   'cities': `${api_url}cities/`,
+  'questions': `${api_url}questions/`,
 }
 
 export const fetch_get = async (ctx, url, token) => {
