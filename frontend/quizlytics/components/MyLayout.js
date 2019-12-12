@@ -29,7 +29,15 @@ const Layout = props => {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
-
+        .question_row {
+          max-width: 680px;
+          margin: 1em 0em 0em 0em;
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+        .question_row:nth-child(even) {background: #BBB}
+        .question_row:nth-child(odd) {background: #EEE}
         .header {
           margin: 0 auto;
           padding: 1rem;

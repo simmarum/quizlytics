@@ -13,6 +13,7 @@ class MyQuestion extends Component {
 
     this.state = {
       token: props.token,
+      questions: props.questions,
       error: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -47,6 +48,14 @@ class MyQuestion extends Component {
               <a>Create</a>
             </Link>
           </div>
+          <div id='questions'>
+            {this.state.questions.map(function (element) {
+              return <div key={element.id} className="question_row">
+                <span>{element.title}</span>
+              </div>;
+            }.bind(this))
+            }
+          </div>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>
@@ -63,10 +72,9 @@ class MyQuestion extends Component {
     const query = encodeQueryData({ "owner_id": user_id })
     const url = api_path['questions'] + "?" + query
     const questions = await get_all_from_api(ctx, url, token)
-    console.log(questions)
     return {
       "token": token,
-      "user_id": user_id,
+      "questions": questions
     }
   }
 }
