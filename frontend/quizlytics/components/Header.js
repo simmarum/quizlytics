@@ -7,7 +7,7 @@ const linkStyle = {
 const Header = props => {
   if (!props.is_logged) {
     return (
-      <div>
+      <div className="header">
         <Link href="/">
           <a style={linkStyle}>Home</a>
         </Link>
@@ -24,7 +24,7 @@ const Header = props => {
     );
   } else {
     return (
-      <div>
+      <div className="header">
         <Link href="/">
           <a style={linkStyle}>Home</a>
         </Link>

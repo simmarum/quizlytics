@@ -29,6 +29,26 @@ const Layout = props => {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
+        .header {
+          margin: 0 auto;
+          padding: 1rem;
+        }
+        .header a {
+          background-color: #cccccc;
+          color: white;
+          padding: 0.5em 1em;
+          position: relative;
+          text-decoration: none;
+          text-transform: uppercase;
+        }
+        .header a:hover {
+          background-color: #888888;
+        }
+        .header a:active {
+          box-shadow: none;
+          top: 5px;
+        }
+
         .tt {
           font-weight: 600;
           font-size: 2rem;
@@ -37,6 +57,21 @@ const Layout = props => {
         form {
           display: flex;
           flex-flow: column;
+        }
+        form button {
+          background-color: #cccccc;
+          color: white;
+          padding: 0.5em 1em;
+          position: relative;
+          text-decoration: none;
+          text-transform: uppercase;
+        }
+        form button:hover {
+          background-color: #888888;
+        }
+        form button:active {
+          box-shadow: none;
+          top: 5px;
         }
         label {
           font-weight: 600;
