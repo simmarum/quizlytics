@@ -22,6 +22,13 @@ const Layout = props => {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
+        .my_question {
+          max-width: 680px;
+          margin: 0 auto;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
         .tt {
           font-weight: 600;
           font-size: 2rem;
