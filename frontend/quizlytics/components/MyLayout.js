@@ -29,26 +29,27 @@ const Layout = props => {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
+
         .header {
           margin: 0 auto;
           padding: 1rem;
         }
-        .header a, button {
+        a, button {
           background-color: #cccccc;
           color: white;
           padding: 0.5em 1em;
+          marginRight: 15;
           position: relative;
           text-decoration: none;
           text-transform: uppercase;
         }
-        .header a:hover, button:hover {
+        a:hover, button:hover {
           background-color: #888888;
         }
-        .header a:active, button:active {
+        a:active, button:active {
           box-shadow: none;
           top: 5px;
         }
-
         .tt {
           font-weight: 600;
           font-size: 2rem;
