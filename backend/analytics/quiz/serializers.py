@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from quiz.models import City, UserProfile, User
+from quiz.models import City, UserProfile, User, QuestionAnswer, Question
 from rest_framework import serializers
 from pprint import pprint
 
@@ -79,3 +79,43 @@ class CitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = City
         fields = ['id', 'name']
+
+
+class QuestionAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionAnswer
+        fields = '__all__'
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answers = QuestionAnswerSerializer(required=True, many=True)
+
+    class Meta:
+        model = Question
+        fields = ('title', 'answers')
+
+    def create(self, validated_data):
+        m_uid = Question.objects.all().aggregate(Max('uid')).get('uid')
+        m_version = Question.objects.all().aggregate(Max('version')).get('version')
+
+        m_uid = 1 if m_uid is None else m_uid+1
+        m_version = 1 if m_version is None else m_version+1
+
+        pprint(validated_data)
+        # profile_data = self.initial_data['profile']
+        # validated_data.pop('profile')
+
+        # password = validated_data.pop('password')
+
+        # validated_data['username'] = "{}_{}".format(
+        #     validated_data['first_name'],
+        #     validated_data['last_name']
+        # )
+
+        # user = User(**validated_data)
+        # validate_password(password, user)
+        # user.set_password(password)
+        # user.save()
+
+        # UserProfile.objects.create(user=user, **profile_data)
+        # return user
