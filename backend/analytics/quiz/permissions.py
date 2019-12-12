@@ -51,3 +51,12 @@ def get_permissions_admin(cls):
     elif cls.action in ['create', 'retrieve', 'update', 'partial_update', 'destroy']:
         permission_classes = [IsAdminUser]
     return [permission() for permission in permission_classes]
+
+
+def get_permissions_owner(cls):
+    permission_classes = []
+    if cls.action == 'list':
+        permission_classes = [AllowAny]
+    elif cls.action in ['create', 'retrieve', 'update', 'partial_update', 'destroy']:
+        permission_classes = [IsLoggedInUserOrAdmin]
+    return [permission() for permission in permission_classes]

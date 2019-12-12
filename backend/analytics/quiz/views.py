@@ -1,4 +1,4 @@
-from quiz.permissions import get_permissions_login, get_permissions_admin
+from quiz.permissions import get_permissions_login, get_permissions_admin, get_permissions_owner
 from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer, QuestionSerializer
 from rest_framework import viewsets
 from quiz.models import City, User, Question
@@ -67,3 +67,6 @@ class QuestionViewSet(mixins.CreateModelMixin,
 
     def get_queryset(self):
         return Question.objects.all().order_by('title')
+
+    def get_permissions(self):
+        return get_permissions_owner(cls=self)
