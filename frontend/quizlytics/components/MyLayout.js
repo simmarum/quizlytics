@@ -33,7 +33,7 @@ const Layout = props => {
           margin: 0 auto;
           padding: 1rem;
         }
-        .header a {
+        .header a, button {
           background-color: #cccccc;
           color: white;
           padding: 0.5em 1em;
@@ -41,10 +41,10 @@ const Layout = props => {
           text-decoration: none;
           text-transform: uppercase;
         }
-        .header a:hover {
+        .header a:hover, button:hover {
           background-color: #888888;
         }
-        .header a:active {
+        .header a:active, button:active {
           box-shadow: none;
           top: 5px;
         }
@@ -58,21 +58,7 @@ const Layout = props => {
           display: flex;
           flex-flow: column;
         }
-        form button {
-          background-color: #cccccc;
-          color: white;
-          padding: 0.5em 1em;
-          position: relative;
-          text-decoration: none;
-          text-transform: uppercase;
-        }
-        form button:hover {
-          background-color: #888888;
-        }
-        form button:active {
-          box-shadow: none;
-          top: 5px;
-        }
+
         label {
           font-weight: 600;
         }
