@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { auth, get_auth_header } from '../utils/auth'
 import { api_path, fetch_get, fetch_patch, encodeQueryData } from '../utils/api_path'
 import { get_all_from_api, get_user_id_from_api } from '../utils/get_data'
+import Router from 'next/router'
 
 class MyQuestion extends Component {
   constructor(props) {
@@ -75,7 +76,10 @@ class MyQuestion extends Component {
           <div className="col-12" id='questions'>
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
-                <button className="btn" >Edit</button>
+                <button
+                  onClick={() => Router.push('/question/show/' + element.id)}
+
+                  className="btn" >Edit</button>
                 <span className="col-6" >{element.title}</span>
               </div>;
             }.bind(this))

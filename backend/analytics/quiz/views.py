@@ -66,6 +66,7 @@ class QuestionViewSet(mixins.CreateModelMixin,
     filter_fields = ('owner_id',)
 
     def get_queryset(self):
+        print("!")
         return Question.objects.all().order_by('-id')
 
     def get_permissions(self):

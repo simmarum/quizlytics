@@ -58,5 +58,5 @@ def get_permissions_owner(cls):
     if cls.action == 'list':
         permission_classes = [AllowAny]
     elif cls.action in ['create', 'retrieve', 'update', 'partial_update', 'destroy']:
-        permission_classes = [IsLoggedInUserOrAdmin]
+        permission_classes = [IsOwnerOrReadOnly]
     return [permission() for permission in permission_classes]
