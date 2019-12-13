@@ -12,6 +12,7 @@ class MyQuestionShow extends Component {
 
     this.state = {
       q_title: '',
+      questions: props.questions,
       token: props.token,
       error: ''
     }
@@ -103,18 +104,18 @@ class MyQuestionShow extends Component {
 
     const qquery = encodeQueryData({ "uid": quid })
     const qurl = api_path['questions'] + "?" + qquery
-    const questions = await get_all_from_api(ctx, qurl, token)
+    var questions = await get_all_from_api(ctx, qurl, token)
 
     const aquery = encodeQueryData({ "uid": quid })
     const aurl = api_path['questions_answers'] + "?" + aquery
     const answers = await get_all_from_api(ctx, aurl, token)
 
-
-    console.log(questions, answers)
+    questions.forEach((o, i, a) => {
+      a[i]['answers'] = answers.filter((e) => e.question_id == a[i]['id'])
+    })
     return {
       "token": token,
       "questions": questions,
-      "answers": answers
     }
   }
 }
