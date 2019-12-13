@@ -77,7 +77,7 @@ class MyQuestion extends Component {
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
                 <button
-                  onClick={() => Router.push('/question/show/' + element.id)}
+                  onClick={() => Router.push('/question/show/' + element.uid)}
 
                   className="btn" >Edit</button>
                 <span className="col-6" >{element.title}</span>

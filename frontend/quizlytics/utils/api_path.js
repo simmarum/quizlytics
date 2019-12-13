@@ -13,6 +13,7 @@ export const api_path = {
   'users': `${api_url}users/`,
   'cities': `${api_url}cities/`,
   'questions': `${api_url}questions/`,
+  'questions_answers': `${api_url}questions_answers/`,
 }
 
 export function encodeQueryData(data) {
