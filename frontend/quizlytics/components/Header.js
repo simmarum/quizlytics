@@ -4,38 +4,38 @@ import Link from 'next/link';
 const Header = props => {
   if (!props.is_logged) {
     return (
-      <div className="header">
+      <div className="header row">
         <Link href="/">
-          <a>Home</a>
+          <a className="col">Home</a>
         </Link>
         <Link href="/about">
-          <a>About</a>
+          <a className="col">About</a>
         </Link>
         <Link href="/login">
-          <a>Login</a>
+          <a className="col">Login</a>
         </Link>
         <Link href="/register">
-          <a>Register</a>
+          <a className="col">Register</a>
         </Link>
       </div>
     );
   } else {
     return (
-      <div className="header">
+      <div className="header row">
         <Link href="/">
-          <a>Home</a>
+          <a className="col">Home</a>
         </Link>
         <Link href="/my_question">
-          <a>My Questions</a>
+          <a className="col">My&nbsp;Questions</a>
         </Link>
         <Link href="/profile">
-          <a>Profile</a>
+          <a className="col">Profile</a>
         </Link>
         <Link href="/about">
-          <a>About</a>
+          <a className="col">About</a>
         </Link>
         <Link href="/logout">
-          <a>Logout</a>
+          <a className="col">Logout</a>
         </Link>
       </div>
     );

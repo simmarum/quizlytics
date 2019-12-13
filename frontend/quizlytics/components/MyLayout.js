@@ -1,4 +1,6 @@
 import Header from './Header';
+import Head from 'next/head'
+import { Container } from 'reactstrap'
 
 const layoutStyle = {
   margin: 20,
@@ -11,8 +13,16 @@ const Layout = props => {
   header_pros.is_logged = props.is_logged
   return (
     <div>
-      <Header {...header_pros} />
-      {props.children}
+      <Head>
+        <title>Analytics</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+      </Head>
+      <Container>
+        <Header {...header_pros} />
+        {props.children}
+      </Container>
+
 
       <style jsx global>{`
         .login, .user_profile, .register{
@@ -48,6 +58,7 @@ const Layout = props => {
           color: white;
           padding: 0.5em 1em;
           margin-right: 0.5em;
+          margin-bottom: 0.5em;
           position: relative;
           text-decoration: none;
           text-transform: uppercase;
