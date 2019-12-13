@@ -26,7 +26,7 @@ export function add_answer(answer_text) {
   tb.innerHTML = "Remove"
 
   var ti = document.createElement('input');
-  ti.setAttribute("class", "col-8 question");
+  ti.setAttribute("class", "col-8");
   ti.type = "text"
   ti.id = `aa_${new_id}`
   if (answer_text != null) {
