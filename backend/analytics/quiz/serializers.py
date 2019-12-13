@@ -97,7 +97,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id', 'uid', 'title', 'owner_id')
+        fields = ('id', 'uid', 'title', 'owner_id', 'version')
 
     def validate_answers(self, value):
         if len(value) < 1:

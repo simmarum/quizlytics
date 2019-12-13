@@ -82,7 +82,7 @@ const Layout = props => {
           flex-flow: column;
         }
 
-        label {
+        label, .bold {
           font-weight: 600;
         }
         input, select {

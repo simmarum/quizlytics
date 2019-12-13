@@ -79,10 +79,11 @@ class MyQuestionShow extends Component {
           <div className="col-12" id='q_answers'>
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
-                <div className="col-12">{element.title}</div>
+                <div className="col-2">v.{element.version}</div>
+                <div className="col-10">{element.title}</div>
                 {element.answers.map(function (answer) {
                   return <div className="col-12" key={answer.answer_number}>
-                    {answer.answer_number} - {answer.answer_text}
+                    <span className="bold">{answer.answer_number}. </span>{answer.answer_text}
                   </div>
                 })}
               </div>
@@ -114,6 +115,7 @@ class MyQuestionShow extends Component {
     questions.forEach((o, i, a) => {
       a[i]['answers'] = answers.filter((e) => e.question_id == a[i]['id'])
     })
+    console.log(questions)
     return {
       "token": token,
       "questions": questions,
