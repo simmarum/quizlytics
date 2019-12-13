@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import { auth, get_auth_header } from '../../utils/auth'
 import { api_path, fetch_get, fetch_patch, fetch_post } from '../../utils/api_path'
+import Router from 'next/router'
 
 class MyQuestionCreate extends Component {
   constructor(props) {
@@ -45,7 +46,9 @@ class MyQuestionCreate extends Component {
       token,
       p_body
     )
-    console.log(user_data)
+    if (typeof user_data !== 'undefined') {
+      Router.push('/my_question')
+    }
   }
 
   add_answer() {
