@@ -9,21 +9,31 @@ import Router from 'next/router'
 class MyQuestionShow extends Component {
   constructor(props) {
     super(props)
-
+    var qt = JSON.parse(JSON.stringify(props.questions[0]['title']));
+    var qa = JSON.parse(JSON.stringify(props.questions[0]['answers']));
     this.state = {
-      q_title: '',
+      q_title: qt,
+      q_answers: qa,
       questions: props.questions,
       token: props.token,
       error: ''
     }
     this.add_answer = add_answer
     this.handleChangeQTitle = this.handleChangeQTitle.bind(this)
+    this.handleChangeAText = this.handleChangeAText.bind(this)
     this.save_question = this.save_question.bind(this)
   }
 
   handleChangeQTitle(event) {
     this.setState({ q_title: event.target.value })
   }
+
+  handleChangeAText(event) {
+    var a = this.state.q_answers
+    a[parseInt(event.target.getAttribute('data-div_id')) - 1]['answer_text'] = event.target.value
+    this.setState({ q_answers: a })
+  }
+
   async save_question(event) {
     event.preventDefault()
     const title = this.state.q_title
@@ -77,6 +87,26 @@ class MyQuestionShow extends Component {
             />
           </div>
           <div className="col-12" id='q_answers'>
+            {this.state.q_answers.map(function (element) {
+              // return this.add_answer(element.answer_text)
+              return <div
+                class="row q_answer"
+                id={element.answer_number}>
+                <button
+                  class="btn"
+                  data-div_id={element.answer_number}>Remove</button>
+                <input
+                  class="col-8"
+                  type="text"
+                  data-div_id={element.answer_number}
+                  value={element.answer_text}
+                  onChange={this.handleChangeAText}></input>
+              </div>
+            }.bind(this))}
+          </div>
+
+          <div className="col-12" id='historical_answers'>
+
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
                 <div className="col-2">v.{element.version}</div>
