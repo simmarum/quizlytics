@@ -2,12 +2,6 @@ import Header from './Header';
 import Head from 'next/head'
 import { Container } from 'reactstrap'
 
-const layoutStyle = {
-  margin: 20,
-  padding: 20,
-  border: '1px solid #DDD'
-};
-
 const Layout = props => {
   let header_pros = {}
   header_pros.is_logged = props.is_logged
