@@ -91,9 +91,13 @@ class QuestionAnswerSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     # answers = QuestionAnswerSerializer(required=True, many=True)
     uid = serializers.SerializerMethodField('get_uid')
+    version = serializers.SerializerMethodField('get_version')
 
     def get_uid(self, obj):
         return obj.uid
+
+    def get_version(self, obj):
+        return obj.version
 
     class Meta:
         model = Question
