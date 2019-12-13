@@ -88,7 +88,7 @@ class QuestionAnswerViewSet(mixins.ListModelMixin,
         tmp_q = Question.objects.filter(uid=q_uid).first()
         q_id = tmp_q.id if tmp_q is not None else None
         print("!", q_uid, q_id, "@")
-        return QuestionAnswer.objects.all().filter(question_id__in=q_ids).order_by('-id')
+        return QuestionAnswer.objects.all().filter(question_id__in=q_ids).order_by('-question_id')
 
     def get_permissions(self):
         return get_permissions_owner(cls=self)
