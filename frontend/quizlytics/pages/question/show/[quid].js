@@ -109,6 +109,9 @@ class MyQuestionShow extends Component {
               </div>
             }.bind(this))}
           </div>
+          <pre className={`error ${this.state.error && 'show'}`}>
+            {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
+          </pre>
 
           <div className="col-12" id='historical_answers'>
 
@@ -125,9 +128,6 @@ class MyQuestionShow extends Component {
             }.bind(this))
             }
           </div>
-          <pre className={`error ${this.state.error && 'show'}`}>
-            {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
-          </pre>
         </div>
       </div>
     )
