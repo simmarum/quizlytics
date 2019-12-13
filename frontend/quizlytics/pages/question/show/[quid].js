@@ -95,7 +95,11 @@ class MyQuestionShow extends Component {
                 key={element.answer_number}>
                 <button
                   className="btn"
-                  data-div_id={element.answer_number}>Remove</button>
+                  data-div_id={element.answer_number}
+                  onClick={() => {
+                    document.getElementById(element.answer_number).remove()
+                  }}
+                >Remove</button>
                 <input
                   className="col-8"
                   type="text"
