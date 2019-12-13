@@ -62,9 +62,9 @@ class Profile extends Component {
   render() {
     return (
       <div>
-        <div className='user_profile'>
-          <div className='tt'>Profile</div>
-          <form onSubmit={this.handleSubmit}>
+        <div className='row user_profile'>
+          <div className='col-12 tt'>Profile</div>
+          <form className='col-12' onSubmit={this.handleSubmit}>
             <label htmlFor='email'>Email</label>
             <input
               type='text'
@@ -108,7 +108,7 @@ class Profile extends Component {
               }.bind(this))
               }
             </select>
-            <button type='submit'>Save</button>
+            <button className="btn" type='submit'>Save</button>
 
             <pre className={`error ${this.state.error && 'show'}`}>
               {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}

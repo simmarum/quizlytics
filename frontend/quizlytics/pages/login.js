@@ -41,9 +41,9 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <div className='login'>
-          <div className='tt'>Login</div>
-          <form onSubmit={this.handleSubmit}>
+        <div className='row login'>
+          <div className='col-12 tt'>Login</div>
+          <form className='col-12' onSubmit={this.handleSubmit}>
             <label htmlFor='email'>E-mail</label>
             <input
               type='text'
@@ -62,7 +62,7 @@ class Login extends Component {
               value={this.state.password}
               onChange={this.handleChangePassword}
             />
-            <button type='submit'>Login</button>
+            <button className="btn" type='submit'>Login</button>
 
             <pre className={`error ${this.state.error && 'show'}`}>
               {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}

@@ -20,7 +20,7 @@ const Layout = props => {
 
       <style jsx global>{`
         .login, .user_profile, .register{
-          max-width: 340px;
+          max-width: 420px;
           margin: 0 auto;
           padding: 1rem;
           border: 1px solid #ccc;

@@ -59,12 +59,13 @@ class MyQuestionCreate extends Component {
     }
 
     var new_answer = document.createElement('div');
-    new_answer.setAttribute("class", "q_answer");
+    new_answer.setAttribute("class", "row q_answer");
     new_answer.setAttribute("id_int", new_id);
     let div_id = "a_" + new_id
     new_answer.setAttribute("id", div_id);
 
     var tb = document.createElement('button');
+    tb.setAttribute("class", "btn");
     tb.setAttribute("data-div_id", div_id)
     tb.addEventListener('click', function () {
       var div_id_to_rm = this.getAttribute("data-div_id")
@@ -74,7 +75,7 @@ class MyQuestionCreate extends Component {
     tb.innerHTML = "Remove"
 
     var ti = document.createElement('input');
-    ti.setAttribute("class", "question");
+    ti.setAttribute("class", "col-8 question");
     ti.type = "text"
     ti.id = `aa_${new_id}`
     ti.innerHTML = `Answer ${new_id}`
@@ -87,24 +88,23 @@ class MyQuestionCreate extends Component {
   render() {
     return (
       <div>
-        <div className='my_question'>
-          <div className='tt'>My Questions - create</div>
-          <div>
-            <button onClick={this.add_answer}>Add answer</button>
-            <button onClick={this.save_question}>Save question</button>
+        <div className='col-12 my_question'>
+          <div className='row tt'>My Questions - create</div>
+          <div className='row'>
+            <button className='btn offset-1' onClick={this.add_answer}>Add answer</button>
+            <button className='btn offset-1' onClick={this.save_question}>Save question</button>
           </div>
-          <div id='q_title'>
-            <label htmlFor='q_title'>Question title</label>
-            <input
-              type='text'
+          <div className="row align-items-center" id='q_title'>
+            <label className="col-3" htmlFor='q_title'>Question title</label>
+            <textarea
               id='q_title'
               name='q_title'
-              className="question"
+              className="col-8 question"
               value={this.state.q_title}
               onChange={this.handleChangeQTitle}
             />
           </div>
-          <div id='q_answers'>
+          <div className="col-12" id='q_answers'>
           </div>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}

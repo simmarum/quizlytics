@@ -65,24 +65,27 @@ class MyQuestion extends Component {
   render() {
     return (
       <div>
-        <div className='my_question'>
-          <div className='tt'>My Questions</div>
-          <div className="question">
+        <div className='col-12 my_question'>
+          <div className='row tt'>My Questions</div>
+          <div className="row question">
             <Link href="/question/create">
-              <a>Create</a>
+              <a className="btn">Create</a>
             </Link>
           </div>
-          <div id='questions'>
+          <div className="col-12" id='questions'>
             {this.state.questions.map(function (element) {
-              return <div key={element.id} className="question_row">
-                <button>Edit</button>
-                <span>{element.title}</span>
+              return <div key={element.id} className="row question_row">
+                <button className="btn" >Edit</button>
+                <span className="col-6" >{element.title}</span>
               </div>;
             }.bind(this))
             }
           </div>
           <div className="question">
-            <button id="load_more_questions" onClick={this.load_more_questions}>Load more ...</button>
+            <button
+              className="btn"
+              id="load_more_questions"
+              onClick={this.load_more_questions}>Load more ...</button>
           </div>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
