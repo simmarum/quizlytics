@@ -39,7 +39,7 @@ class Question(models.Model):
         unique_together = (("uid", "version"),)
 
     def __str__(self):
-        return f"uid={self.uid}, version={self.version}, title={self.title}\n"
+        return f"id={self.id}, uid={self.uid}, version={self.version}, title={self.title}\n"
 
 
 class QuestionAnswer(models.Model):

@@ -85,15 +85,19 @@ class CitySerializer(serializers.HyperlinkedModelSerializer):
 class QuestionAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionAnswer
-        fields = ('answer_number', 'answer_text')
+        fields = ('answer_number', 'answer_text', "question_id")
 
 
 class QuestionSerializer(serializers.ModelSerializer):
     # answers = QuestionAnswerSerializer(required=True, many=True)
+    uid = serializers.SerializerMethodField('get_uid')
+
+    def get_uid(self, obj):
+        return obj.uid
 
     class Meta:
         model = Question
-        fields = ('id', 'title', 'owner_id')
+        fields = ('id', 'uid', 'title', 'owner_id')
 
     def validate_answers(self, value):
         if len(value) < 1:

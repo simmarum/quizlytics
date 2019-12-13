@@ -1,7 +1,7 @@
 from quiz.permissions import get_permissions_login, get_permissions_admin, get_permissions_owner
-from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer, QuestionSerializer
+from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer, QuestionSerializer, QuestionAnswerSerializer
 from rest_framework import viewsets
-from quiz.models import City, User, Question
+from quiz.models import City, User, Question, QuestionAnswer
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from pprint import pprint
@@ -63,11 +63,32 @@ class QuestionViewSet(mixins.CreateModelMixin,
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('owner_id',)
+    filter_fields = ('owner_id', 'uid')
 
     def get_queryset(self):
         print("!")
         return Question.objects.all().order_by('-id')
+
+    def get_permissions(self):
+        return get_permissions_owner(cls=self)
+
+
+class QuestionAnswerViewSet(mixins.ListModelMixin,
+                            viewsets.GenericViewSet):
+    """
+    API endpoint that allows questions to be viewed or deleted.
+    """
+    queryset = QuestionAnswer.objects.all()
+    serializer_class = QuestionAnswerSerializer
+
+    def get_queryset(self):
+        q_uid = self.request.GET.get('uid')
+        q_ids = [v['id'] for v in Question.objects.filter(uid=q_uid).values('id').distinct()]
+
+        tmp_q = Question.objects.filter(uid=q_uid).first()
+        q_id = tmp_q.id if tmp_q is not None else None
+        print("!", q_uid, q_id, "@")
+        return QuestionAnswer.objects.all().filter(question_id__in=q_ids).order_by('-id')
 
     def get_permissions(self):
         return get_permissions_owner(cls=self)
