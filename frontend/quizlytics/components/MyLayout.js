@@ -47,7 +47,7 @@ const Layout = props => {
           background-color: #cccccc;
           color: white;
           padding: 0.5em 1em;
-          marginRight: 15;
+          margin-right: 0.5em;
           position: relative;
           text-decoration: none;
           text-transform: uppercase;

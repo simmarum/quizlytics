@@ -75,6 +75,7 @@ class MyQuestion extends Component {
           <div id='questions'>
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="question_row">
+                <button>Edit</button>
                 <span>{element.title}</span>
               </div>;
             }.bind(this))
