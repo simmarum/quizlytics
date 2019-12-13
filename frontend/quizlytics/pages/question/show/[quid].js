@@ -77,16 +77,17 @@ class MyQuestionShow extends Component {
             />
           </div>
           <div className="col-12" id='q_answers'>
-            {/* {this.state.questions.map(function (element) {
+            {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
-                <button
-                  onClick={() => Router.push('/question/show/' + element.uid)}
-
-                  className="btn" >Edit</button>
-                <span className="col-6" >{element.title}</span>
-              </div>;
+                <div className="col-12">{element.title}</div>
+                {element.answers.map(function (answer) {
+                  return <div className="col-12" key={answer.answer_number}>
+                    {answer.answer_number} - {answer.answer_text}
+                  </div>
+                })}
+              </div>
             }.bind(this))
-            } */}
+            }
           </div>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
