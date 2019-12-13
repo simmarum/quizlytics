@@ -90,13 +90,14 @@ class MyQuestionShow extends Component {
             {this.state.q_answers.map(function (element) {
               // return this.add_answer(element.answer_text)
               return <div
-                class="row q_answer"
-                id={element.answer_number}>
+                className="row q_answer"
+                id={element.answer_number}
+                key={element.answer_number}>
                 <button
-                  class="btn"
+                  className="btn"
                   data-div_id={element.answer_number}>Remove</button>
                 <input
-                  class="col-8"
+                  className="col-8"
                   type="text"
                   data-div_id={element.answer_number}
                   value={element.answer_text}
