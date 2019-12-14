@@ -120,12 +120,16 @@ class QuestionSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        m_uid = Question.objects.all().aggregate(Max('uid')).get('uid__max')
+        q_uid = self.initial_data.get('q_uid')
+        print("##", q_uid, self.initial_data)
+        if q_uid is None:
+            m_uid = Question.objects.all().aggregate(Max('uid')).get('uid__max')
+            m_uid = 1 if m_uid is None else m_uid+1
+        else:
+            m_uid = int(q_uid)
         m_version = Question.objects.all().aggregate(Max('version')).get('version__max')
-
-        m_uid = 1 if m_uid is None else m_uid+1
         m_version = 1 if m_version is None else m_version+1
-
+        print("@@", m_uid, m_version)
         answers = self.initial_data['answers']
         answers = self.validate_answers(answers)
         question = Question(uid=m_uid, version=m_version, owner=self.context['request'].user, ** validated_data)

@@ -9,6 +9,7 @@ import Router from 'next/router'
 class MyQuestionShow extends Component {
   constructor(props) {
     super(props)
+    this.quid = props.quid;
     var qt = JSON.parse(JSON.stringify(props.questions[0]['title']));
     var qa = JSON.parse(JSON.stringify(props.questions[0]['answers']));
     this.state = {
@@ -50,8 +51,8 @@ class MyQuestionShow extends Component {
         'answer_text': all_answers[i].getElementsByTagName('input')[0].value,
       })
     }
-    console.log(answers)
     const p_body = JSON.stringify({
+      'q_uid': this.quid,
       "title": title,
       "answers": answers
     })
@@ -74,7 +75,7 @@ class MyQuestionShow extends Component {
           <div className='row tt'>My Questions - edit</div>
           <div className='row'>
             <button className='btn offset-1' onClick={() => this.add_answer(null)}>Add answer</button>
-            <button className='btn offset-1' onClick={this.save_question}>Save question</button>
+            <button className='btn offset-1' onClick={this.save_question}>Save edited question</button>
           </div>
           <div className="row align-items-center" id='q_title'>
             <label className="col-3" htmlFor='q_title'>Question title</label>
@@ -150,8 +151,8 @@ class MyQuestionShow extends Component {
     questions.forEach((o, i, a) => {
       a[i]['answers'] = answers.filter((e) => e.question_id == a[i]['id'])
     })
-    console.log(questions)
     return {
+      "quid": quid,
       "token": token,
       "questions": questions,
     }
