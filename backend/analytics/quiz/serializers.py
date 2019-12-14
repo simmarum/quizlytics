@@ -87,6 +87,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     # answers = QuestionAnswerSerializer(required=True, many=True)
     uid = serializers.SerializerMethodField('get_uid')
     version = serializers.SerializerMethodField('get_version')
+    city_name = serializers.SerializerMethodField('get_city_name')
 
     def get_uid(self, obj):
         return obj.uid
@@ -94,9 +95,14 @@ class QuestionSerializer(serializers.ModelSerializer):
     def get_version(self, obj):
         return obj.version
 
+    def get_city_name(self, obj):
+        tmp_u = User.objects.get(id=obj.user_id)
+        tmp_c = City.objects.get(id=tmp_u.profile.city_id)
+        return tmp_c.name
+
     class Meta:
         model = Question
-        fields = ('id', 'uid', 'title', 'user_id', 'version')
+        fields = ('id', 'uid', 'title', 'user_id', 'version', 'city_name')
 
     def validate_answers(self, value):
         if len(value) < 1:
