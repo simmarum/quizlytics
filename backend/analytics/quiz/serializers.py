@@ -6,7 +6,6 @@ from rest_framework import serializers
 from django.db.models import Max
 from django.core.mail import send_mail
 from django.conf import settings
-from os import pardir
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

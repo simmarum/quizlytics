@@ -6,7 +6,6 @@ from quiz.serializers import (UserSerializer, GroupSerializer, CitySerializer,
 from rest_framework import viewsets
 from quiz.models import City, User, Question, QuestionAnswer, MailSend
 from django.contrib.auth.models import Group
-from rest_framework.response import Response
 from rest_framework import viewsets, mixins
 from django_filters import rest_framework as filters
 from rest_framework import filters as rffilters
