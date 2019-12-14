@@ -77,7 +77,6 @@ class Profile extends Component {
               type='text'
               id='first_name'
               name='first_name'
-              autoComplete='first_name'
               value={this.state.first_name}
               onChange={this.handleChangeFirstName}
             />
@@ -86,7 +85,6 @@ class Profile extends Component {
               type='text'
               id='last_name'
               name='last_name'
-              autoComplete='last_name'
               value={this.state.last_name}
               onChange={this.handleChangeLastName}
             />
