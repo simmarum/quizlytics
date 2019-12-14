@@ -6,7 +6,7 @@ const Header = props => {
     return (
       <div className="header row">
         <Link href="/">
-          <a className="col">Home</a>
+          <a className="col">Questions</a>
         </Link>
         <Link href="/about">
           <a className="col">About</a>
@@ -23,7 +23,7 @@ const Header = props => {
     return (
       <div className="header row">
         <Link href="/">
-          <a className="col">Home</a>
+          <a className="col">Questions</a>
         </Link>
         <Link href="/my_question">
           <a className="col">My&nbsp;Questions</a>
