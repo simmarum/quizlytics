@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.urls import path
 from rest_framework import routers
-from quiz.views import UserViewSet, CityViewSet, QuestionViewSet, QuestionAnswerViewSet
+from quiz.views import UserViewSet, CityViewSet, QuestionViewSet, QuestionAnswerViewSet, MailSendViewSet
 from rest_framework.documentation import include_docs_urls
 
 from rest_framework_simplejwt.views import (
@@ -15,6 +15,7 @@ router.register(r'users', UserViewSet, base_name='users')
 router.register(r'cities', CityViewSet, base_name='cities')
 router.register(r'questions', QuestionViewSet, base_name='questions')
 router.register(r'questions_answers', QuestionAnswerViewSet, base_name='questions_answers')
+router.register(r'mail_send', MailSendViewSet, base_name='mail_send')
 
 urlpatterns = [
     url(r'', include(router.urls)),

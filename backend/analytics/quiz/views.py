@@ -1,7 +1,7 @@
-from quiz.permissions import get_permissions_login, get_permissions_admin, get_permissions_owner
-from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer, QuestionSerializer, QuestionAnswerSerializer
+from quiz.permissions import get_permissions_login, get_permissions_admin, get_permissions_owner, get_permissions_create_no_login
+from quiz.serializers import UserSerializer, GroupSerializer, CitySerializer, QuestionSerializer, QuestionAnswerSerializer, MailSendSerializer
 from rest_framework import viewsets
-from quiz.models import City, User, Question, QuestionAnswer
+from quiz.models import City, User, Question, QuestionAnswer, MailSend
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from pprint import pprint
@@ -105,3 +105,15 @@ class QuestionAnswerViewSet(mixins.ListModelMixin,
 
     def get_permissions(self):
         return get_permissions_owner(cls=self)
+
+
+class MailSendViewSet(mixins.CreateModelMixin,
+                      viewsets.GenericViewSet):
+    """
+    API endpoint that allows MailSend to be created.
+    """
+    queryset = MailSend.objects.all()
+    serializer_class = MailSendSerializer
+
+    def get_permissions(self):
+        return get_permissions_create_no_login(cls=self)

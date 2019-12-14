@@ -46,3 +46,9 @@ class QuestionAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.PROTECT)
     answer_number = models.IntegerField()
     answer_text = models.CharField(max_length=500)
+
+
+class MailSend(models.Model):
+    subject = models.CharField(max_length=100)
+    message = models.CharField(max_length=500)
+    to_email = models.EmailField(max_length=100)

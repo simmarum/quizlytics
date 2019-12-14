@@ -1,10 +1,12 @@
 from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from quiz.models import City, UserProfile, User, QuestionAnswer, Question
+from quiz.models import City, UserProfile, User, QuestionAnswer, Question, MailSend
 from rest_framework import serializers
 from pprint import pprint
 from django.db.models import Max
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -159,3 +161,23 @@ class QuestionSerializer(serializers.ModelSerializer):
 
         # UserProfile.objects.create(user=user, **profile_data)
         return question
+
+
+class MailSendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MailSend
+        fields = ('subject', 'message', "to_email")
+
+    def create(self, validated_data):
+        mail_send = MailSend(**validated_data)
+        mail_send.save()
+
+        subject = validated_data["subject"]
+        message = validated_data["message"]
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [validated_data["to_email"], ]
+
+        # send_mail(subject, message, email_from, recipient_list)
+        print("Send mail:", subject, message, recipient_list)
+
+        return mail_send

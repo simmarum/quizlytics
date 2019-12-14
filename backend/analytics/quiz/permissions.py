@@ -33,6 +33,15 @@ class IsAdminUser(permissions.BasePermission):
         return request.user and request.user.is_staff
 
 
+def get_permissions_create_no_login(cls):
+    permission_classes = []
+    if cls.action == 'create':
+        permission_classes = [AllowAny]
+    elif cls.action in ['list', 'retrieve', 'update', 'partial_update', 'destroy']:
+        permission_classes = [IsAdminUser]
+    return [permission() for permission in permission_classes]
+
+
 def get_permissions_login(cls):
     permission_classes = []
     if cls.action == 'create':
