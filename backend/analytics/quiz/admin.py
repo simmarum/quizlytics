@@ -14,10 +14,9 @@ class UserProfileInline(admin.StackedInline):
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'date_joined')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+
     )
     add_fieldsets = (
         (None, {
@@ -25,6 +24,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
+    readonly_fields = ("email", "date_joined", "password")
     list_display = ('email', 'first_name', 'last_name', 'is_staff')
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
@@ -56,6 +56,7 @@ class CityAdmin(admin.ModelAdmin):
 
 @admin.register(MailSend)
 class MailSendAdmin(admin.ModelAdmin):
+    readonly_fields = ("to_email", "subject", "message")
     list_display = ('to_email', 'subject', 'message')
     search_fields = ('subject', 'to_email')
     ordering = ('to_email',)
