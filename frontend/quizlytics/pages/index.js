@@ -84,16 +84,18 @@ class Analytics extends Component {
       <div>
         <div className='col-12 my_question'>
           <div className='row tt'><h1>Welcome to Analytics Questions</h1></div>
-          <div className="row">
-            <label className="col-2">Title</label>
-            <input className="col-3"
+          <div className="row align-items-center">
+            <label className="col-1 offset-1">Title</label>
+            <input className="col-4"
               value={this.s_title}
               onChange={this.handleChangeSTitle}
             ></input>
-            <button
-              className="btn"
-              id="search_question"
-              onClick={this.get_questions_search}>Search</button>
+            <div className="col-2">
+              <button
+                className="btn "
+                id="search_question"
+                onClick={this.get_questions_search}>Search</button>
+            </div>
           </div>
           <div className="col-12" id='questions'>
             {this.state.questions.map(function (element) {
