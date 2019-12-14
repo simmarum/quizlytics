@@ -121,7 +121,7 @@ class QuestionSerializer(serializers.ModelSerializer):
             m_uid = 1 if m_uid is None else m_uid+1
         else:
             m_uid = int(q_uid)
-        m_version = Question.objects.all().aggregate(Max('version')).get('version__max')
+        m_version = Question.objects.all().filter(uid=m_uid).aggregate(Max('version')).get('version__max')
         m_version = 1 if m_version is None else m_version+1
         answers = self.initial_data['answers']
         answers = self.validate_answers(answers)
