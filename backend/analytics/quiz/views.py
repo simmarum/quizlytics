@@ -82,12 +82,23 @@ class QuestionAnswerViewSet(mixins.ListModelMixin,
     serializer_class = QuestionAnswerSerializer
 
     def get_queryset(self):
+        q_id = self.request.GET.get('id')
+
         q_uid = self.request.GET.get('uid')
         q_ids = [v['id'] for v in Question.objects.filter(uid=q_uid).values('id').distinct()]
 
+        # print("!@#", type(q_id), q_id, q_uid, q_ids, q_id in q_ids, type(q_ids[0]))
+        if q_id is not None:
+            try:
+                q_id = int(q_id)
+                q_ids = [q_id] if q_id in q_ids else []
+            except ValueError:
+                pass
+        # print("!@##@!", q_ids)
+
         tmp_q = Question.objects.filter(uid=q_uid).first()
         q_id = tmp_q.id if tmp_q is not None else None
-        print("!", q_uid, q_id, "@")
+        # print("!", q_uid, q_id, "@")
         return QuestionAnswer.objects.all().filter(question_id__in=q_ids).order_by('-question_id', 'answer_number')
 
     def get_permissions(self):

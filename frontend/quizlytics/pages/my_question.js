@@ -28,11 +28,22 @@ class MyQuestion extends Component {
     const token = this.state.token
     var questions = this.state.questions
 
-    const new_questions = await fetch_get(
+    var new_questions = await fetch_get(
       this,
       this.state.questions_next,
       this.state.token
     )
+    for (let index = 0; index < new_questions.results.length; index++) {
+      const aquery = encodeQueryData({
+        "uid": new_questions.results[index]['uid'],
+        "id": new_questions.results[index]['id']
+      })
+      const aurl = api_path['questions_answers'] + "?" + aquery
+      const answers = await get_all_from_api(this, aurl, token)
+      console.log("!", index, answers)
+      new_questions.results[index]['answers'] = answers.filter(
+        (e) => e.question_id == new_questions.results[index]['id'])
+    }
     questions = questions.concat(new_questions.results)
     var load_button = document.getElementById('load_more_questions')
     if (new_questions.next == null) {
@@ -78,9 +89,13 @@ class MyQuestion extends Component {
               return <div key={element.id} className="row question_row">
                 <button
                   onClick={() => Router.push('/question/edit/' + element.uid)}
-
                   className="btn" >Edit</button>
-                <span className="col-6" >{element.title}</span>
+                <div className="col-12">{element.title}</div>
+                {element.answers.map(function (answer) {
+                  return <div className="col-12" key={answer.answer_number}>
+                    <span className="bold">{answer.answer_number}. </span>{answer.answer_text}
+                  </div>
+                })}
               </div>;
             }.bind(this))
             }
@@ -95,7 +110,7 @@ class MyQuestion extends Component {
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>
         </div>
-      </div>
+      </div >
     )
   }
 
@@ -107,11 +122,23 @@ class MyQuestion extends Component {
     const query = encodeQueryData({ "owner_id": user_id })
     const url = api_path['questions'] + "?" + query
     // const questions = await get_all_from_api(ctx, url, token)
-    const questions = await fetch_get(
+    var questions = await fetch_get(
       ctx,
       url,
       token,
     )
+    for (let index = 0; index < questions.results.length; index++) {
+      const aquery = encodeQueryData({
+        "uid": questions.results[index]['uid'],
+        "id": questions.results[index]['id']
+      })
+      const aurl = api_path['questions_answers'] + "?" + aquery
+      const answers = await get_all_from_api(ctx, aurl, token)
+      console.log("!", index, answers)
+      questions.results[index]['answers'] = answers.filter(
+        (e) => e.question_id == questions.results[index]['id'])
+    }
+
     return {
       "token": token,
       "questions": questions
