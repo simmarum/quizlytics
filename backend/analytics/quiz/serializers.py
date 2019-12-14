@@ -17,7 +17,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer(required=True)
-    url = serializers.HyperlinkedIdentityField(view_name="users-detail")
+    url = serializers.HyperlinkedIdentityField(view_name='users-detail')
 
     class Meta:
         model = User
@@ -42,7 +42,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
         password = validated_data.pop('password')
 
-        validated_data['username'] = "{}_{}".format(
+        validated_data['username'] = '{}_{}'.format(
             validated_data['first_name'],
             validated_data['last_name']
         )
@@ -80,7 +80,7 @@ class CitySerializer(serializers.HyperlinkedModelSerializer):
 class QuestionAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionAnswer
-        fields = ('answer_number', 'answer_text', "question_id")
+        fields = ('answer_number', 'answer_text', 'question_id')
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -140,7 +140,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         return question
 
         # def destroy(self, request, pk=None):
-        #     print("DESTROY", pk)
+        #     print('DESTROY', pk)
         #     inst = Question.objects.get(id=pk)
         #     inst.active = 0
         #     inst.save()
@@ -152,18 +152,18 @@ class QuestionSerializer(serializers.ModelSerializer):
 class MailSendSerializer(serializers.ModelSerializer):
     class Meta:
         model = MailSend
-        fields = ('subject', 'message', "to_email")
+        fields = ('subject', 'message', 'to_email')
 
     def create(self, validated_data):
         mail_send = MailSend(**validated_data)
         mail_send.save()
 
-        subject = validated_data["subject"]
-        message = validated_data["message"]
+        subject = validated_data['subject']
+        message = validated_data['message']
         email_from = settings.EMAIL_HOST_USER
-        recipient_list = [validated_data["to_email"], ]
+        recipient_list = [validated_data['to_email'], ]
 
         # send_mail(subject, message, email_from, recipient_list)
-        print("Send mail:", subject, message, recipient_list)
+        print('Send mail:', subject, message, recipient_list)
 
         return mail_send

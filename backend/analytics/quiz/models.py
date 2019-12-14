@@ -21,7 +21,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
-        return "{}".format(self.email)
+        return '{}'.format(self.email)
 
 
 class UserProfile(models.Model):
@@ -38,13 +38,13 @@ class Question(models.Model):
     active = models.IntegerField()
 
     class Meta:
-        unique_together = (("uid", "version"),)
+        unique_together = (('uid', 'version'),)
 
     def __str__(self):
-        tmp_s = f"id={self.id}, "
-        tmp_s += f"uid={self.uid}, "
-        tmp_s += f"version={self.version}, "
-        tmp_s += f"title={self.title}"
+        tmp_s = f'id={self.id}, '
+        tmp_s += f'uid={self.uid}, '
+        tmp_s += f'version={self.version}, '
+        tmp_s += f'title={self.title}'
         return tmp_s
 
 

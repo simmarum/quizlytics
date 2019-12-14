@@ -24,7 +24,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    readonly_fields = ("email", "date_joined", "password")
+    readonly_fields = ('email', 'date_joined', 'password')
     list_display = ('id', 'email', 'first_name', 'last_name', 'is_staff')
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
@@ -56,7 +56,7 @@ class CityAdmin(admin.ModelAdmin):
 
 @admin.register(MailSend)
 class MailSendAdmin(admin.ModelAdmin):
-    readonly_fields = ("to_email", "subject", "message")
+    readonly_fields = ('to_email', 'subject', 'message')
     list_display = ('to_email', 'subject', 'message')
     search_fields = ('subject', 'to_email')
     ordering = ('to_email',)
