@@ -153,3 +153,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = get_email_cred()['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = get_email_cred()['EMAIL_HOST_PASSWORD']
+# # File 'cred.py' should look like
+# def get_email_cred():
+#     return {
+#         "EMAIL_HOST_PASSWORD": "password",
+#         "EMAIL_HOST_USER": "mail"
+#     }
