@@ -8,14 +8,14 @@ class Analytics extends Component {
     super(props)
 
     this.state = {
-      s_title: '',
+      s_text: '',
       token: props.token,
       questions_next: props.questions.next,
       questions: props.questions.results,
       error: '',
       success: '',
     }
-    this.handleChangeSTitle = this.handleChangeSTitle.bind(this)
+    this.handleChangeSText = this.handleChangeSText.bind(this)
     this.get_questions_search = this.get_questions_search.bind(this)
     this.load_more_questions = this.load_more_questions.bind(this)
     this.check_load_button = this.check_load_button.bind(this)
@@ -34,14 +34,14 @@ class Analytics extends Component {
     var new_questions = await Analytics.get_questions(
       this,
       this.state.token,
-      this.state.s_title)
+      this.state.s_text)
     this.setState({ "questions_next": new_questions.next })
     this.setState({ "questions": new_questions.results })
     this.check_load_button()
 
   }
-  handleChangeSTitle(event) {
-    this.setState({ s_title: event.target.value })
+  handleChangeSText(event) {
+    this.setState({ s_text: event.target.value })
   }
 
   async load_more_questions() {
@@ -75,10 +75,10 @@ class Analytics extends Component {
         <div className='col-12 my_question'>
           <div className='row tt'><h1>Welcome to Analytics Questions</h1></div>
           <div className="row align-items-center">
-            <label className="col-1 offset-1">Title</label>
-            <input className="col-4"
-              value={this.s_title}
-              onChange={this.handleChangeSTitle}
+            <input className="col-4 offset-1"
+              value={this.s_text}
+              placeholder="Search by title and city"
+              onChange={this.handleChangeSText}
             ></input>
             <div className="col-2">
               <button
@@ -90,7 +90,8 @@ class Analytics extends Component {
           <div className="col-12" id='questions'>
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
-                <div className="col-12">{element.title}</div>
+                <div className="col-2">[{element.city_name}]</div>
+                <div className="col-9">{element.title}</div>
                 {element.answers.map(function (answer) {
                   return <div className="col-12" key={answer.answer_number}>
                     <span className="bold">{answer.answer_number}. </span>{answer.answer_text}
@@ -116,11 +117,11 @@ class Analytics extends Component {
       </div >
     )
   }
-  static async get_questions(ctx, token, s_title) {
+  static async get_questions(ctx, token, s_text) {
     var url = api_path['questions']
-    if (s_title != null) {
+    if (s_text != null) {
       const tquery = encodeQueryData({
-        "search": s_title,
+        "search": s_text,
       })
       url = url + "?" + tquery
     }
