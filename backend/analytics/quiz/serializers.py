@@ -1,4 +1,3 @@
-from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from quiz.models import City, UserProfile, User, QuestionAnswer, Question, MailSend
@@ -70,12 +69,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         instance.save()
 
         return instance
-
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ['url', 'name']
 
 
 class CitySerializer(serializers.HyperlinkedModelSerializer):

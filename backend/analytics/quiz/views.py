@@ -1,11 +1,10 @@
 from quiz.permissions import (get_permissions_login, get_permissions_admin,
                               get_permissions_owner, get_permissions_create_no_login)
-from quiz.serializers import (UserSerializer, GroupSerializer, CitySerializer,
+from quiz.serializers import (UserSerializer, CitySerializer,
                               QuestionSerializer, QuestionAnswerSerializer,
                               MailSendSerializer)
 from rest_framework import viewsets
 from quiz.models import City, User, Question, QuestionAnswer, MailSend
-from django.contrib.auth.models import Group
 from rest_framework import viewsets, mixins
 from django_filters import rest_framework as filters
 from rest_framework import filters as rffilters
@@ -31,14 +30,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         return get_permissions_login(cls=self)
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
 
 
 class CityViewSet(viewsets.ModelViewSet):
