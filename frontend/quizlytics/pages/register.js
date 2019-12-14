@@ -17,7 +17,8 @@ class Register extends Component {
       city_id: 1,
       password: '',
       cities_data: cities_data_sort,
-      error: ''
+      error: '',
+      success: '',
     }
     this.handleChangeEmail = this.handleChangeEmail.bind(this)
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
@@ -123,6 +124,9 @@ class Register extends Component {
               onChange={this.handleChangePassword}
             />
             <button className="btn" type='submit'>Register</button>
+            <pre className={`success ${this.state.success && 'show'}`}>
+              Success
+            </pre>
             <pre className={`error ${this.state.error && 'show'}`}>
               {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
             </pre>

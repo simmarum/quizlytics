@@ -13,7 +13,8 @@ class MyQuestion extends Component {
       token: props.token,
       questions_next: props.questions.next,
       questions: props.questions.results,
-      error: ''
+      error: '',
+      success: '',
     }
     this.load_more_questions = this.load_more_questions.bind(this)
   }
@@ -83,6 +84,9 @@ class MyQuestion extends Component {
               id="load_more_questions"
               onClick={this.load_more_questions}>Load more ...</button>
           </div>
+          <pre className={`success ${this.state.success && 'show'}`}>
+            Success
+          </pre>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>

@@ -7,7 +7,12 @@ class Login extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { email: '', password: '', error: '' }
+    this.state = {
+      email: '',
+      password: '',
+      error: '',
+      success: '',
+    }
     this.handleChangeEmail = this.handleChangeEmail.bind(this)
     this.handleChangePassword = this.handleChangePassword.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -58,6 +63,9 @@ class Login extends Component {
               onChange={this.handleChangePassword}
             />
             <button className="btn" type='submit'>Login</button>
+            <pre className={`success ${this.state.success && 'show'}`}>
+              Success
+            </pre>
             <pre className={`error ${this.state.error && 'show'}`}>
               {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
             </pre>

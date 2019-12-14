@@ -17,7 +17,8 @@ class Profile extends Component {
       last_name: user_profile.last_name,
       city_id: user_profile.profile.city_id,
       cities_data: cities_data_sort,
-      error: ''
+      error: '',
+      success: '',
     }
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
     this.handleChangeLastName = this.handleChangeLastName.bind(this)
@@ -106,7 +107,9 @@ class Profile extends Component {
               }
             </select>
             <button className="btn" type='submit'>Save</button>
-
+            <pre className={`success ${this.state.success && 'show'}`}>
+              Success
+            </pre>
             <pre className={`error ${this.state.error && 'show'}`}>
               {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
             </pre>

@@ -11,7 +11,8 @@ class MyQuestionCreate extends Component {
     this.state = {
       q_title: '',
       token: props.token,
-      error: ''
+      error: '',
+      success: '',
     }
 
     this.add_answer = add_answer
@@ -74,6 +75,9 @@ class MyQuestionCreate extends Component {
           </div>
           <div className="col-12" id='q_answers'>
           </div>
+          <pre className={`success ${this.state.success && 'show'}`}>
+            Success
+          </pre>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>

@@ -33,14 +33,14 @@ export const fetch_get = async (ctx, url, token) => {
     if (response.ok) {
       const data = await response.json()
       if (ctx.setState) {
-        ctx.setState({ error: undefined })
+        ctx.setState({ error: undefined, success: true })
       }
       return data
     } else {
       console.log('Request GET failed: ' + url)
       const data = await response.json()
       if (ctx.setState) {
-        ctx.setState({ error: Object.entries(data) })
+        ctx.setState({ error: Object.entries(data), success: undefined })
       }
     }
   } catch (error) {
@@ -62,14 +62,14 @@ export const fetch_post = async (ctx, url, token, p_body) => {
     if (response.ok) {
       const data = await response.json()
       if (ctx.setState) {
-        ctx.setState({ error: undefined })
+        ctx.setState({ error: undefined, success: true })
       }
       return data
     } else {
       console.log('Request POST failed: ' + url)
       const data = await response.json()
       if (ctx.setState) {
-        ctx.setState({ error: Object.entries(data) })
+        ctx.setState({ error: Object.entries(data), success: undefined })
       }
     }
   } catch (error) {
@@ -91,14 +91,14 @@ export const fetch_patch = async (ctx, url, token, p_body) => {
     if (response.ok) {
       const data = await response.json()
       if (ctx.setState) {
-        ctx.setState({ error: undefined })
+        ctx.setState({ error: undefined, success: true })
       }
       return data
     } else {
       console.log('Request PATCH failed: ' + url)
       const data = await response.json()
       if (ctx.setState) {
-        ctx.setState({ error: Object.entries(data) })
+        ctx.setState({ error: Object.entries(data), success: undefined })
       }
     }
   } catch (error) {

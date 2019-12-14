@@ -10,7 +10,8 @@ class MyQuestionShow extends Component {
     this.state = {
       questions: props.questions,
       token: props.token,
-      error: ''
+      error: '',
+      success: '',
     }
   }
 
@@ -19,6 +20,9 @@ class MyQuestionShow extends Component {
       <div>
         <div className='col-12 my_question'>
           <div className='row tt'>My Questions - show all versions</div>
+          <pre className={`success ${this.state.success && 'show'}`}>
+            Success
+          </pre>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>

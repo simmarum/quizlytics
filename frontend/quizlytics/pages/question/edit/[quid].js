@@ -17,7 +17,8 @@ class MyQuestionShow extends Component {
       q_answers: qa,
       questions: props.questions,
       token: props.token,
-      error: ''
+      error: '',
+      success: '',
     }
     this.add_answer = add_answer
     this.handleChangeQTitle = this.handleChangeQTitle.bind(this)
@@ -108,6 +109,9 @@ class MyQuestionShow extends Component {
               </div>
             }.bind(this))}
           </div>
+          <pre className={`success ${this.state.success && 'show'}`}>
+            Success
+          </pre>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>

@@ -12,7 +12,8 @@ class Analytics extends Component {
       token: props.token,
       questions_next: props.questions.next,
       questions: props.questions.results,
-      error: ''
+      error: '',
+      success: '',
     }
     this.handleChangeSTitle = this.handleChangeSTitle.bind(this)
     this.get_questions_search = this.get_questions_search.bind(this)
@@ -105,6 +106,9 @@ class Analytics extends Component {
               id="load_more_questions"
               onClick={this.load_more_questions}>Load more ...</button>
           </div>
+          <pre className={`success ${this.state.success && 'show'}`}>
+            Success
+          </pre>
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>

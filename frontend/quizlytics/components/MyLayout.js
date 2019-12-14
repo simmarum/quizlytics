@@ -90,12 +90,17 @@ const Layout = props => {
         input:read-only {
             background-color: #bbbbbb;
           }
+        .success {
+          margin: 0.5rem 0 0;
+          display: none;
+          color: green;
+        }
         .error {
           margin: 0.5rem 0 0;
           display: none;
           color: brown;
         }
-        .error.show {
+        .error.show, .success.show {
           display: block;
         }
         pre {

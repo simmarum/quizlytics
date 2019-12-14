@@ -11,7 +11,8 @@ class Contact extends Component {
             message: '',
             email: '',
             password: '',
-            error: ''
+            error: '',
+            success: ''
         }
         this.handleChangeSubject = this.handleChangeSubject.bind(this)
         this.handleChangeMessage = this.handleChangeMessage.bind(this)
@@ -75,6 +76,9 @@ class Contact extends Component {
                             onChange={this.handleChangeEmail}
                         />
                         <button className="btn" type='submit'>Send mail</button>
+                        <pre className={`success ${this.state.success && 'show'}`}>
+                            Success
+                        </pre>
                         <pre className={`error ${this.state.error && 'show'}`}>
                             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
                         </pre>
