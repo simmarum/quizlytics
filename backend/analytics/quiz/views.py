@@ -21,8 +21,6 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         tmp_user = self.request.user
         queryset = User.objects.all()
-        if tmp_user.is_superuser:
-            return queryset.order_by('id')
         if tmp_user.id is not None:
             return queryset.filter(id=tmp_user.id).order_by('id')
         else:
