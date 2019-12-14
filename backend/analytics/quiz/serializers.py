@@ -139,15 +139,6 @@ class QuestionSerializer(serializers.ModelSerializer):
 
         return question
 
-        # def destroy(self, request, pk=None):
-        #     print('DESTROY', pk)
-        #     inst = Question.objects.get(id=pk)
-        #     inst.active = 0
-        #     inst.save()
-        #     return inst
-
-        #     pass
-
 
 class MailSendSerializer(serializers.ModelSerializer):
     class Meta:
