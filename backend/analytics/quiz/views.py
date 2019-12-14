@@ -56,7 +56,7 @@ class QuestionViewSet(mixins.CreateModelMixin,
     serializer_class = QuestionSerializer
     filter_backends = (filters.DjangoFilterBackend, rffilters.SearchFilter)
     filter_fields = ('user_id', 'uid')
-    search_fields = ('title',)
+    search_fields = ('title', 'user__profile__city__name')
 
     def get_queryset(self):
         return Question.objects.all().filter(active=1).order_by('-id')
