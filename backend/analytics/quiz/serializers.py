@@ -133,7 +133,8 @@ class QuestionSerializer(serializers.ModelSerializer):
         answers = self.initial_data['answers']
         answers = self.validate_answers(answers)
         question = Question(uid=m_uid, version=m_version,
-                            user=self.context['request'].user, **validated_data)
+                            user=self.context['request'].user,
+                            active=1, **validated_data)
         question.save()
         for one_answer in answers:
             q_answer = QuestionAnswer(question=question, **one_answer)
