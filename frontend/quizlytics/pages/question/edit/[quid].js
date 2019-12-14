@@ -118,7 +118,7 @@ class MyQuestionShow extends Component {
 
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
-                <div className="col-2">v.{element.version}</div>
+                <div className="col-2">[v.{element.version}]</div>
                 <div className="col-10">{element.title}</div>
                 {element.answers.map(function (answer) {
                   return <div className="col-12" key={answer.answer_number}>
