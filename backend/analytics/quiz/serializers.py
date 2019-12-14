@@ -3,10 +3,10 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from quiz.models import City, UserProfile, User, QuestionAnswer, Question, MailSend
 from rest_framework import serializers
-from pprint import pprint
 from django.db.models import Max
 from django.core.mail import send_mail
 from django.conf import settings
+from os import pardir
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -23,7 +23,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'id', 'email', 'first_name', 'last_name', 'password', 'profile')
+        fields = ('url', 'id', 'email', 'first_name',
+                  'last_name', 'password', 'profile')
         extra_kwargs = {
             'password': {'write_only': True},
             'first_name': {'required': True},
@@ -123,7 +124,6 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         q_uid = self.initial_data.get('q_uid')
-        print("##", q_uid, self.initial_data)
         if q_uid is None:
             m_uid = Question.objects.all().aggregate(Max('uid')).get('uid__max')
             m_uid = 1 if m_uid is None else m_uid+1
@@ -131,10 +131,10 @@ class QuestionSerializer(serializers.ModelSerializer):
             m_uid = int(q_uid)
         m_version = Question.objects.all().aggregate(Max('version')).get('version__max')
         m_version = 1 if m_version is None else m_version+1
-        print("@@", m_uid, m_version)
         answers = self.initial_data['answers']
         answers = self.validate_answers(answers)
-        question = Question(uid=m_uid, version=m_version, owner=self.context['request'].user, ** validated_data)
+        question = Question(uid=m_uid, version=m_version,
+                            owner=self.context['request'].user, **validated_data)
         question.save()
         for one_answer in answers:
             q_answer = QuestionAnswer(question=question, **one_answer)
@@ -144,22 +144,6 @@ class QuestionSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(exc.message_dict)
             q_answer.save()
 
-        # profile_data = self.initial_data['profile']
-        # validated_data.pop('profile')
-
-        # password = validated_data.pop('password')
-
-        # validated_data['username'] = "{}_{}".format(
-        #     validated_data['first_name'],
-        #     validated_data['last_name']
-        # )
-
-        # user = User(**validated_data)
-        # validate_password(password, user)
-        # user.set_password(password)
-        # user.save()
-
-        # UserProfile.objects.create(user=user, **profile_data)
         return question
 
 

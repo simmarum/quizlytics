@@ -25,7 +25,8 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE, related_name='profile')
     city = models.ForeignKey(City, on_delete=models.PROTECT)
 
 
@@ -39,7 +40,11 @@ class Question(models.Model):
         unique_together = (("uid", "version"),)
 
     def __str__(self):
-        return f"id={self.id}, uid={self.uid}, version={self.version}, title={self.title}\n"
+        tmp_s = f"id={self.id}, "
+        tmp_s += f"uid={self.uid}, "
+        tmp_s += f"version={self.version}, "
+        tmp_s += f"title={self.title}"
+        return tmp_s
 
 
 class QuestionAnswer(models.Model):
