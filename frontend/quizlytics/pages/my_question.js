@@ -1,14 +1,13 @@
 import { Component } from 'react'
 import Link from 'next/link';
 import { auth } from '../utils/auth'
-import { api_path, fetch_get, fetch_patch, encodeQueryData } from '../utils/api_path'
+import { api_path, fetch_get, fetch_delete, encodeQueryData } from '../utils/api_path'
 import { get_all_from_api, get_user_id_from_api } from '../utils/get_data'
 import Router from 'next/router'
 
 class MyQuestion extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       token: props.token,
       questions_next: props.questions.next,
@@ -16,9 +15,20 @@ class MyQuestion extends Component {
       error: '',
       success: '',
     }
+    console.log(this.state)
     this.load_more_questions = this.load_more_questions.bind(this)
+    this.remove_question = this.remove_question.bind(this)
   }
 
+  async remove_question(uid) {
+    console.log("REMOVE", uid)
+    const url = api_path['questions'] + uid + "/"
+    const api_date = await fetch_delete(
+      this,
+      url,
+      this.state.token
+    )
+  }
   async load_more_questions() {
     const token = this.state.token
     var questions = this.state.questions
@@ -68,6 +78,10 @@ class MyQuestion extends Component {
                 <button
                   onClick={() => Router.push('/question/show/' + element.uid)}
                   className="btn" >Versions</button>
+                <button
+                  onClick={() => this.remove_question(element.id)}
+                  className="btn" >Delete</button>
+                <div className="col-12">{element.title}</div>
                 <div className="col-12">{element.title}</div>
                 {element.answers.map(function (answer) {
                   return <div className="col-12" key={answer.answer_number}>
@@ -98,7 +112,7 @@ class MyQuestion extends Component {
   static async getInitialProps(ctx) {
     const token = await auth(ctx);
     const user_id = await get_user_id_from_api(ctx, token);
-    const query = encodeQueryData({ "owner_id": user_id })
+    const query = encodeQueryData({ "user_id": user_id })
     const url = api_path['questions'] + "?" + query
     var questions = await fetch_get(
       ctx,

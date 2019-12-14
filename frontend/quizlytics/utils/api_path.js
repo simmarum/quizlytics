@@ -109,3 +109,31 @@ export const fetch_patch = async (ctx, url, token, p_body) => {
     throw new Error(error)
   }
 }
+
+export const fetch_delete = async (ctx, url, token) => {
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: get_auth_header(token),
+    })
+    if (response.ok) {
+      const data = await response.json()
+      if (ctx.setState) {
+        ctx.setState({ error: undefined, success: true })
+      }
+      return data
+    } else {
+      console.log('Request DELETE failed: ' + url)
+      const data = await response.json()
+      if (ctx.setState) {
+        ctx.setState({ error: Object.entries(data), success: undefined })
+      }
+    }
+  } catch (error) {
+    console.error(
+      'You have an error in your code or there are Network issues.',
+      error
+    )
+    throw new Error(error)
+  }
+}
