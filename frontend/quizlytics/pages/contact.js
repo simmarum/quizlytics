@@ -45,6 +45,9 @@ class Contact extends Component {
         const url = api_path['mail_send']
         const p_body = JSON.stringify({ subject, message, "to_email": email })
         const api_data = fetch_post(this, url, null, p_body)
+        if (typeof api_data !== "undefined") {
+            this.setState({ subject: "", message: "", email: "" })
+        }
     }
 
     render() {
