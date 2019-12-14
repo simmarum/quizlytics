@@ -48,7 +48,7 @@ class TestUsersApi(TestCase):
         res_data = response.json()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(res_data['count'], 2)
+        self.assertEqual(res_data['count'], 1)
 
     def test_users_list_normal_user(self):
         user = User.objects.all().filter(id=2).first()
