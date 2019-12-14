@@ -1,8 +1,5 @@
-import fetch from 'isomorphic-unfetch'
-import Layout from '../components/MyLayout'
-import nextCookie from 'next-cookies'
 import { Component } from 'react'
-import { auth, get_auth_header } from '../utils/auth'
+import { auth } from '../utils/auth'
 import { api_path, fetch_get, fetch_patch } from '../utils/api_path'
 import { get_all_from_api } from '../utils/get_data'
 
@@ -120,8 +117,6 @@ class Profile extends Component {
   }
 
   static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
     const token = await auth(ctx);
     const user_data = await fetch_get(
       this,
@@ -140,4 +135,5 @@ class Profile extends Component {
     }
   }
 }
+
 export default Profile

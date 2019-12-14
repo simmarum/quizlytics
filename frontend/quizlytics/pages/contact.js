@@ -1,14 +1,8 @@
 import { Component } from 'react'
-import fetch from 'isomorphic-unfetch'
-import Layout from '../components/MyLayout'
-import { login, auth } from '../utils/auth'
 import { api_path, fetch_post } from '../utils/api_path'
-import Router from 'next/router'
-
 
 
 class Contact extends Component {
-
     constructor(props) {
         super(props)
 
@@ -34,7 +28,6 @@ class Contact extends Component {
     handleChangeEmail(event) {
         this.setState({ email: event.target.value })
     }
-
 
     async handleSubmit(event) {
         event.preventDefault()
@@ -82,7 +75,6 @@ class Contact extends Component {
                             onChange={this.handleChangeEmail}
                         />
                         <button className="btn" type='submit'>Send mail</button>
-
                         <pre className={`error ${this.state.error && 'show'}`}>
                             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
                         </pre>

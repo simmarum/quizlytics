@@ -1,9 +1,6 @@
-import fetch from 'isomorphic-unfetch'
-import Layout from '../components/MyLayout'
-import nextCookie from 'next-cookies'
 import { Component } from 'react'
 import Link from 'next/link';
-import { auth, get_auth_header } from '../utils/auth'
+import { auth } from '../utils/auth'
 import { api_path, fetch_get, fetch_patch, encodeQueryData } from '../utils/api_path'
 import { get_all_from_api, get_user_id_from_api } from '../utils/get_data'
 import Router from 'next/router'
@@ -19,12 +16,9 @@ class MyQuestion extends Component {
       error: ''
     }
     this.load_more_questions = this.load_more_questions.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   async load_more_questions() {
-    console.log("#@#", this)
-    const url = this.state.questions_next
     const token = this.state.token
     var questions = this.state.questions
 
@@ -40,7 +34,6 @@ class MyQuestion extends Component {
       })
       const aurl = api_path['questions_answers'] + "?" + aquery
       const answers = await get_all_from_api(this, aurl, token)
-      console.log("!", index, answers)
       new_questions.results[index]['answers'] = answers.filter(
         (e) => e.question_id == new_questions.results[index]['id'])
     }
@@ -53,25 +46,6 @@ class MyQuestion extends Component {
     }
     this.setState({ "questions_next": new_questions.next })
     this.setState({ "questions": questions })
-
-  }
-  async handleSubmit(event) {
-    event.preventDefault()
-    const url = this.state.url
-    const token = await auth(this);
-    const p_body = JSON.stringify({
-      "first_name": this.state.first_name,
-      "last_name": this.state.last_name,
-      "profile": {
-        'city_id': this.state.city_id
-      }
-    })
-    const user_data = await fetch_patch(
-      this,
-      url,
-      token,
-      p_body
-    )
   }
 
   render() {
@@ -118,13 +92,10 @@ class MyQuestion extends Component {
   }
 
   static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
     const token = await auth(ctx);
     const user_id = await get_user_id_from_api(ctx, token);
     const query = encodeQueryData({ "owner_id": user_id })
     const url = api_path['questions'] + "?" + query
-    // const questions = await get_all_from_api(ctx, url, token)
     var questions = await fetch_get(
       ctx,
       url,
@@ -148,4 +119,5 @@ class MyQuestion extends Component {
     }
   }
 }
+
 export default MyQuestion

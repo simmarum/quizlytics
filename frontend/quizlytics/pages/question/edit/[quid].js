@@ -1,8 +1,8 @@
 import { Component } from 'react'
-import { auth, get_auth_header } from '../../../utils/auth'
+import { auth } from '../../../utils/auth'
 import { add_answer } from '../../../utils/question'
 import { get_all_from_api } from '../../../utils/get_data'
-import { api_path, fetch_get, fetch_patch, fetch_post, encodeQueryData } from '../../../utils/api_path'
+import { api_path, fetch_post, encodeQueryData } from '../../../utils/api_path'
 import Router from 'next/router'
 
 
@@ -67,7 +67,6 @@ class MyQuestionShow extends Component {
     }
   }
 
-
   render() {
     return (
       <div>
@@ -89,7 +88,6 @@ class MyQuestionShow extends Component {
           </div>
           <div className="col-12" id='q_answers'>
             {this.state.q_answers.map(function (element) {
-              // return this.add_answer(element.answer_text)
               return <div
                 className="row q_answer"
                 id={element.answer_number}
@@ -113,9 +111,7 @@ class MyQuestionShow extends Component {
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>
-
           <div className="col-12" id='historical_answers'>
-
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
                 <div className="col-2">[v.{element.version}]</div>
@@ -135,8 +131,6 @@ class MyQuestionShow extends Component {
   }
 
   static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
     const { quid } = ctx.query;
     const token = await auth(ctx);
 

@@ -1,9 +1,7 @@
 import { Component } from 'react'
-import { auth, get_auth_header } from '../../../utils/auth'
-import { add_answer } from '../../../utils/question'
+import { auth } from '../../../utils/auth'
 import { get_all_from_api } from '../../../utils/get_data'
-import { api_path, fetch_get, fetch_patch, fetch_post, encodeQueryData } from '../../../utils/api_path'
-import Router from 'next/router'
+import { api_path, encodeQueryData } from '../../../utils/api_path'
 
 
 class MyQuestionShow extends Component {
@@ -21,11 +19,9 @@ class MyQuestionShow extends Component {
       <div>
         <div className='col-12 my_question'>
           <div className='row tt'>My Questions - show all versions</div>
-
           <pre className={`error ${this.state.error && 'show'}`}>
             {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
           </pre>
-
           <div className="col-12" id='historical_answers'>
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
@@ -46,8 +42,6 @@ class MyQuestionShow extends Component {
   }
 
   static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
     const { quid } = ctx.query;
     const token = await auth(ctx);
 
@@ -69,4 +63,5 @@ class MyQuestionShow extends Component {
     }
   }
 }
+
 export default MyQuestionShow

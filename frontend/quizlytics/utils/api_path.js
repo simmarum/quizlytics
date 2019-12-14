@@ -32,7 +32,6 @@ export const fetch_get = async (ctx, url, token) => {
     })
     if (response.ok) {
       const data = await response.json()
-      console.log("ASD")
       if (ctx.setState) {
         ctx.setState({ error: undefined })
       }

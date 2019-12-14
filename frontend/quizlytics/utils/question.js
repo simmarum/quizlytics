@@ -1,5 +1,4 @@
 export function add_answer(answer_text) {
-  console.log(answer_text)
   var q_answers = document.getElementById("q_answers");
   var all_answers = document.getElementsByClassName("q_answer");
   var new_id = 1;

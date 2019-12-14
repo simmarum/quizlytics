@@ -1,14 +1,9 @@
 import { Component } from 'react'
-import fetch from 'isomorphic-unfetch'
-import Layout from '../components/MyLayout'
-import { login, auth } from '../utils/auth'
+import { login } from '../utils/auth'
 import { api_path, fetch_post } from '../utils/api_path'
-import Router from 'next/router'
-
 
 
 class Login extends Component {
-
   constructor(props) {
     super(props)
 
@@ -63,7 +58,6 @@ class Login extends Component {
               onChange={this.handleChangePassword}
             />
             <button className="btn" type='submit'>Login</button>
-
             <pre className={`error ${this.state.error && 'show'}`}>
               {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
             </pre>

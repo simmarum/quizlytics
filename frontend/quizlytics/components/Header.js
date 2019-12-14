@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-
 const Header = props => {
   if (!props.is_logged) {
     return (
@@ -41,6 +40,5 @@ const Header = props => {
     );
   }
 }
-
 
 export default Header;

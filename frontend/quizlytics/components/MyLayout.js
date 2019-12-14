@@ -16,8 +16,6 @@ const Layout = props => {
         <Header {...header_pros} />
         {props.children}
       </Container>
-
-
       <style jsx global>{`
         .login, .user_profile, .register, .contact{
           max-width: 420px;
@@ -67,7 +65,6 @@ const Layout = props => {
         button:disabled,
         button[disabled] {
           background-color: #444444;
-
         }
         .tt {
           font-weight: 600;
@@ -81,7 +78,6 @@ const Layout = props => {
           display: flex;
           flex-flow: column;
         }
-
         label, .bold {
           font-weight: 600;
         }

@@ -1,7 +1,4 @@
 import { Component } from 'react'
-import fetch from 'isomorphic-unfetch'
-import Layout from '../components/MyLayout'
-import { login, auth } from '../utils/auth'
 import { api_path, fetch_post } from '../utils/api_path'
 import Router from 'next/router'
 import { get_all_from_api } from '../utils/get_data'
@@ -9,7 +6,6 @@ import { get_all_from_api } from '../utils/get_data'
 
 
 class Register extends Component {
-
   constructor(props) {
     super(props)
     const cities_data_sort = props.cities_data.sort((a, b) => (a.name > b.name) ? 1 : -1)
@@ -114,7 +110,6 @@ class Register extends Component {
                   value={element.id}>
                   {element.name}
                 </option>;
-
               }.bind(this))
               }
             </select>
@@ -128,7 +123,6 @@ class Register extends Component {
               onChange={this.handleChangePassword}
             />
             <button className="btn" type='submit'>Register</button>
-
             <pre className={`error ${this.state.error && 'show'}`}>
               {this.state.error && `${JSON.stringify(this.state.error, null, 2)}`}
             </pre>
@@ -138,8 +132,6 @@ class Register extends Component {
     )
   }
   static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
     const cities_data = await get_all_from_api(
       this,
       api_path.cities,

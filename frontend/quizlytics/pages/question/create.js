@@ -1,7 +1,7 @@
 import { Component } from 'react'
-import { auth, get_auth_header } from '../../utils/auth'
+import { auth } from '../../utils/auth'
 import { add_answer } from '../../utils/question'
-import { api_path, fetch_get, fetch_patch, fetch_post } from '../../utils/api_path'
+import { api_path, fetch_post } from '../../utils/api_path'
 import Router from 'next/router'
 
 class MyQuestionCreate extends Component {
@@ -84,8 +84,6 @@ class MyQuestionCreate extends Component {
   }
 
   static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
     const token = await auth(ctx);
     return {
       "token": token,

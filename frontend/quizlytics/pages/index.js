@@ -1,12 +1,7 @@
-import fetch from 'isomorphic-unfetch'
-import Layout from '../components/MyLayout'
-import nextCookie from 'next-cookies'
 import { Component } from 'react'
-import Link from 'next/link';
-import { auth, get_auth_header } from '../utils/auth'
-import { api_path, fetch_get, fetch_patch, encodeQueryData } from '../utils/api_path'
-import { get_all_from_api, get_user_id_from_api } from '../utils/get_data'
-import Router from 'next/router'
+import { auth } from '../utils/auth'
+import { api_path, fetch_get, encodeQueryData } from '../utils/api_path'
+import { get_all_from_api } from '../utils/get_data'
 
 class Analytics extends Component {
   constructor(props) {
@@ -19,7 +14,6 @@ class Analytics extends Component {
       questions: props.questions.results,
       error: ''
     }
-    console.log("B", this.state)
     this.handleChangeSTitle = this.handleChangeSTitle.bind(this)
     this.get_questions_search = this.get_questions_search.bind(this)
     this.load_more_questions = this.load_more_questions.bind(this)
@@ -40,11 +34,9 @@ class Analytics extends Component {
       this,
       this.state.token,
       this.state.s_title)
-    console.log("V", new_questions)
     this.setState({ "questions_next": new_questions.next })
     this.setState({ "questions": new_questions.results })
     this.check_load_button()
-    console.log("C", this.state)
 
   }
   handleChangeSTitle(event) {
@@ -52,8 +44,6 @@ class Analytics extends Component {
   }
 
   async load_more_questions() {
-    console.log("#@#", this)
-    const url = this.state.questions_next
     const token = this.state.token
     var questions = this.state.questions
 
@@ -69,7 +59,6 @@ class Analytics extends Component {
       })
       const aurl = api_path['questions_answers'] + "?" + aquery
       const answers = await get_all_from_api(this, aurl, token)
-      console.log("!", index, answers)
       new_questions.results[index]['answers'] = answers.filter(
         (e) => e.question_id == new_questions.results[index]['id'])
     }
@@ -132,7 +121,6 @@ class Analytics extends Component {
       })
       url = url + "?" + tquery
     }
-    // const questions = await get_all_from_api(ctx, url, token)
     var questions = await fetch_get(
       ctx,
       url,
@@ -145,15 +133,12 @@ class Analytics extends Component {
       })
       const aurl = api_path['questions_answers'] + "?" + aquery
       const answers = await get_all_from_api(ctx, aurl, token)
-      console.log("!", index, answers)
       questions.results[index]['answers'] = answers.filter(
         (e) => e.question_id == questions.results[index]['id'])
     }
     return questions
   }
   static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
     const token = await auth(ctx);
     var questions = await Analytics.get_questions(ctx, token, null)
     console.log("A", questions)
@@ -163,4 +148,5 @@ class Analytics extends Component {
     }
   }
 }
+
 export default Analytics
