@@ -154,7 +154,7 @@ class MailSendSerializer(serializers.ModelSerializer):
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [validated_data['to_email'], ]
 
-        # send_mail(subject, message, email_from, recipient_list)
-        print('Send mail:', subject, message, recipient_list)
+        send_mail(subject, message, email_from, recipient_list)
+        # print('Send mail:', subject, message, recipient_list)
 
         return mail_send
