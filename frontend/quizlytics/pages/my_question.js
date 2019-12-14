@@ -90,6 +90,9 @@ class MyQuestion extends Component {
                 <button
                   onClick={() => Router.push('/question/edit/' + element.uid)}
                   className="btn" >Edit</button>
+                <button
+                  onClick={() => Router.push('/question/show/' + element.uid)}
+                  className="btn" >Versions</button>
                 <div className="col-12">{element.title}</div>
                 {element.answers.map(function (answer) {
                   return <div className="col-12" key={answer.answer_number}>
