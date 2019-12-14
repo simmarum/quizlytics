@@ -13,12 +13,42 @@ class Analytics extends Component {
     super(props)
 
     this.state = {
+      s_title: '',
       token: props.token,
       questions_next: props.questions.next,
       questions: props.questions.results,
       error: ''
     }
+    console.log("B", this.state)
+    this.handleChangeSTitle = this.handleChangeSTitle.bind(this)
+    this.get_questions_search = this.get_questions_search.bind(this)
     this.load_more_questions = this.load_more_questions.bind(this)
+    this.check_load_button = this.check_load_button.bind(this)
+  }
+
+  check_load_button() {
+    var load_button = document.getElementById('load_more_questions')
+    if (this.state.questions_next == null) {
+      load_button.disabled = true
+    } else {
+      load_button.disabled = false
+    }
+  }
+
+  async get_questions_search() {
+    var new_questions = await Analytics.get_questions(
+      this,
+      this.state.token,
+      this.state.s_title)
+    console.log("V", new_questions)
+    this.setState({ "questions_next": new_questions.next })
+    this.setState({ "questions": new_questions.results })
+    this.check_load_button()
+    console.log("C", this.state)
+
+  }
+  handleChangeSTitle(event) {
+    this.setState({ s_title: event.target.value })
   }
 
   async load_more_questions() {
@@ -44,22 +74,27 @@ class Analytics extends Component {
         (e) => e.question_id == new_questions.results[index]['id'])
     }
     questions = questions.concat(new_questions.results)
-    var load_button = document.getElementById('load_more_questions')
-    if (new_questions.next == null) {
-      load_button.disabled = true
-    } else {
-      load_button.disabled = false
-    }
+
     this.setState({ "questions_next": new_questions.next })
     this.setState({ "questions": questions })
-
+    this.check_load_button()
   }
   render() {
     return (
       <div>
         <div className='col-12 my_question'>
           <div className='row tt'><h1>Welcome to Analytics Questions</h1></div>
-
+          <div className="row">
+            <label className="col-2">Title</label>
+            <input className="col-3"
+              value={this.s_title}
+              onChange={this.handleChangeSTitle}
+            ></input>
+            <button
+              className="btn"
+              id="search_question"
+              onClick={this.get_questions_search}>Search</button>
+          </div>
           <div className="col-12" id='questions'>
             {this.state.questions.map(function (element) {
               return <div key={element.id} className="row question_row">
@@ -86,12 +121,15 @@ class Analytics extends Component {
       </div >
     )
   }
-
-  static async getInitialProps(ctx) {
-    // We use `nextCookie` to get the cookie and pass the token to the
-    // frontend in the `props`.
-    const token = await auth(ctx);
-    const url = api_path['questions']
+  static async get_questions(ctx, token, s_title) {
+    console.log("asd", s_title)
+    var url = api_path['questions']
+    if (s_title != null) {
+      const tquery = encodeQueryData({
+        "search": s_title,
+      })
+      url = url + "?" + tquery
+    }
     // const questions = await get_all_from_api(ctx, url, token)
     var questions = await fetch_get(
       ctx,
@@ -109,7 +147,14 @@ class Analytics extends Component {
       questions.results[index]['answers'] = answers.filter(
         (e) => e.question_id == questions.results[index]['id'])
     }
-
+    return questions
+  }
+  static async getInitialProps(ctx) {
+    // We use `nextCookie` to get the cookie and pass the token to the
+    // frontend in the `props`.
+    const token = await auth(ctx);
+    var questions = await Analytics.get_questions(ctx, token, null)
+    console.log("A", questions)
     return {
       "token": token,
       "questions": questions
