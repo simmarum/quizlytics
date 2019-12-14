@@ -42,12 +42,9 @@ class Contact extends Component {
         const message = this.state.message
         const email = this.state.email
 
-        const url = api_path['token']
-        const p_body = JSON.stringify({ email, password })
+        const url = api_path['mail_send']
+        const p_body = JSON.stringify({ subject, message, "to_email": email })
         const api_data = fetch_post(this, url, null, p_body)
-        api_data.then(value => {
-            login(value)
-        })
     }
 
     render() {

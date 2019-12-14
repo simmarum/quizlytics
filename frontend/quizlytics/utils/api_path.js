@@ -14,6 +14,7 @@ export const api_path = {
   'cities': `${api_url}cities/`,
   'questions': `${api_url}questions/`,
   'questions_answers': `${api_url}questions_answers/`,
+  'mail_send': `${api_url}mail_send/`,
 }
 
 export function encodeQueryData(data) {
