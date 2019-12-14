@@ -150,9 +150,11 @@ class MailSendSerializer(serializers.ModelSerializer):
         mail_send.save()
 
         subject = validated_data['subject']
+        subject = "[SZT-Analytics] "+subject
         message = validated_data['message']
+        message = "[FROM: {}]\n".format(validated_data['to_email']) + message
         email_from = settings.EMAIL_HOST_USER
-        recipient_list = [validated_data['to_email'], ]
+        recipient_list = [email_from, ]
 
         send_mail(subject, message, email_from, recipient_list)
         # print('Send mail:', subject, message, recipient_list)
