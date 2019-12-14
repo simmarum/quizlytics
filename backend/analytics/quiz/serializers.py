@@ -103,7 +103,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id', 'uid', 'title', 'owner_id', 'version')
+        fields = ('id', 'uid', 'title', 'user_id', 'version')
 
     def validate_answers(self, value):
         if len(value) < 1:
@@ -133,7 +133,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         answers = self.initial_data['answers']
         answers = self.validate_answers(answers)
         question = Question(uid=m_uid, version=m_version,
-                            owner=self.context['request'].user, **validated_data)
+                            user=self.context['request'].user, **validated_data)
         question.save()
         for one_answer in answers:
             q_answer = QuestionAnswer(question=question, **one_answer)
@@ -144,6 +144,15 @@ class QuestionSerializer(serializers.ModelSerializer):
             q_answer.save()
 
         return question
+
+        # def destroy(self, request, pk=None):
+        #     print("DESTROY", pk)
+        #     inst = Question.objects.get(id=pk)
+        #     inst.active = 0
+        #     inst.save()
+        #     return inst
+
+        #     pass
 
 
 class MailSendSerializer(serializers.ModelSerializer):

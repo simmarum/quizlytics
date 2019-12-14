@@ -31,10 +31,11 @@ class UserProfile(models.Model):
 
 
 class Question(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     uid = models.IntegerField()
     version = models.IntegerField()
     title = models.CharField(max_length=100)
+    active = models.IntegerField()
 
     class Meta:
         unique_together = (("uid", "version"),)

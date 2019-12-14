@@ -9,6 +9,7 @@ from django.contrib.auth.models import Group
 from rest_framework import viewsets, mixins
 from django_filters import rest_framework as filters
 from rest_framework import filters as rffilters
+from rest_framework.response import Response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -65,14 +66,19 @@ class QuestionViewSet(mixins.CreateModelMixin,
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     filter_backends = (filters.DjangoFilterBackend, rffilters.SearchFilter)
-    filter_fields = ('owner_id', 'uid')
+    filter_fields = ('user_id', 'uid')
     search_fields = ('title',)
 
     def get_queryset(self):
-        return Question.objects.all().order_by('-id')
+        return Question.objects.all().filter(active=1).order_by('-id')
 
     def get_permissions(self):
         return get_permissions_owner(cls=self)
+
+    def destroy(self, request, *args, **kwargs):
+        inst = self.get_object()
+        instances = Question.objects.filter(uid=inst.uid).update(active=0)
+        return Response(data='OK')
 
 
 class QuestionAnswerViewSet(mixins.ListModelMixin,
@@ -88,7 +94,8 @@ class QuestionAnswerViewSet(mixins.ListModelMixin,
 
         q_uid = self.request.GET.get('uid')
         q_ids = [v['id'] for v
-                 in Question.objects.filter(uid=q_uid).values('id').distinct()]
+                 in Question.objects.filter(uid=q_uid).filter(active=1)
+                 .values('id').distinct()]
 
         if q_id is not None:
             try:
@@ -97,7 +104,7 @@ class QuestionAnswerViewSet(mixins.ListModelMixin,
             except ValueError:
                 pass
 
-        tmp_q = Question.objects.filter(uid=q_uid).first()
+        tmp_q = Question.objects.filter(uid=q_uid).filter(active=1).first()
         q_id = tmp_q.id if tmp_q is not None else None
         return QuestionAnswer.objects.all()\
             .filter(question_id__in=q_ids)\
