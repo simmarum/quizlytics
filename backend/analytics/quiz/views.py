@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from pprint import pprint
 from rest_framework import viewsets, mixins
 from django_filters import rest_framework as filters
+from rest_framework import filters as rffilters
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -62,8 +63,9 @@ class QuestionViewSet(mixins.CreateModelMixin,
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
+    filter_backends = (filters.DjangoFilterBackend, rffilters.SearchFilter)
     filter_fields = ('owner_id', 'uid')
+    search_fields = ('title',)
 
     def get_queryset(self):
         print("!")
