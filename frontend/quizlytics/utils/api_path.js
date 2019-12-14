@@ -32,6 +32,10 @@ export const fetch_get = async (ctx, url, token) => {
     })
     if (response.ok) {
       const data = await response.json()
+      console.log("ASD")
+      if (ctx.setState) {
+        ctx.setState({ error: undefined })
+      }
       return data
     } else {
       console.log('Request GET failed: ' + url)
@@ -58,6 +62,9 @@ export const fetch_post = async (ctx, url, token, p_body) => {
     })
     if (response.ok) {
       const data = await response.json()
+      if (ctx.setState) {
+        ctx.setState({ error: undefined })
+      }
       return data
     } else {
       console.log('Request POST failed: ' + url)
@@ -84,6 +91,9 @@ export const fetch_patch = async (ctx, url, token, p_body) => {
     })
     if (response.ok) {
       const data = await response.json()
+      if (ctx.setState) {
+        ctx.setState({ error: undefined })
+      }
       return data
     } else {
       console.log('Request PATCH failed: ' + url)
