@@ -235,6 +235,7 @@ class TestUsersApi(TestCase):
 
         assert_response = {
             'email': '2@2.pl',
+            'id': 2,
             'first_name': 'new',
             'last_name': 'new',
             'profile': {'city_id': '2'},
