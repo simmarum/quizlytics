@@ -8,8 +8,8 @@ const Header = props => {
         <Link href="/">
           <a className="col">Questions</a>
         </Link>
-        <Link href="/about">
-          <a className="col">About</a>
+        <Link href="/contact">
+          <a className="col">Contact</a>
         </Link>
         <Link href="/login">
           <a className="col">Login</a>
@@ -31,8 +31,8 @@ const Header = props => {
         <Link href="/profile">
           <a className="col">Profile</a>
         </Link>
-        <Link href="/about">
-          <a className="col">About</a>
+        <Link href="/contact">
+          <a className="col">Contact</a>
         </Link>
         <Link href="/logout">
           <a className="col">Logout</a>
