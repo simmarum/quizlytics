@@ -113,7 +113,6 @@ class Analytics extends Component {
     )
   }
   static async get_questions(ctx, token, s_title) {
-    console.log("asd", s_title)
     var url = api_path['questions']
     if (s_title != null) {
       const tquery = encodeQueryData({
@@ -141,7 +140,6 @@ class Analytics extends Component {
   static async getInitialProps(ctx) {
     const token = await auth(ctx);
     var questions = await Analytics.get_questions(ctx, token, null)
-    console.log("A", questions)
     return {
       "token": token,
       "questions": questions

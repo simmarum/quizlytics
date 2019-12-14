@@ -38,7 +38,6 @@ class MyQuestionCreate extends Component {
         'answer_text': all_answers[i].getElementsByTagName('input')[0].value,
       })
     }
-    console.log(answers)
     const p_body = JSON.stringify({
       "title": title,
       "answers": answers

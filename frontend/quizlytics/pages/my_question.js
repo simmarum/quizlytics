@@ -108,7 +108,6 @@ class MyQuestion extends Component {
       })
       const aurl = api_path['questions_answers'] + "?" + aquery
       const answers = await get_all_from_api(ctx, aurl, token)
-      console.log("!", index, answers)
       questions.results[index]['answers'] = answers.filter(
         (e) => e.question_id == questions.results[index]['id'])
     }
