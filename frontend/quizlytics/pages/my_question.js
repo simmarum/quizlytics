@@ -9,25 +9,32 @@ class MyQuestion extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      user_id: props.user_id,
       token: props.token,
       questions_next: props.questions.next,
       questions: props.questions.results,
       error: '',
       success: '',
     }
-    console.log(this.state)
     this.load_more_questions = this.load_more_questions.bind(this)
     this.remove_question = this.remove_question.bind(this)
   }
 
   async remove_question(uid) {
-    console.log("REMOVE", uid)
     const url = api_path['questions'] + uid + "/"
     const api_date = await fetch_delete(
       this,
       url,
       this.state.token
     )
+    var questions = await MyQuestion.get_questions(
+      this,
+      this.state.user_id,
+      this.state.token)
+    this.setState({
+      "questions_next": questions.next,
+      "questions": questions.results,
+    })
   }
   async load_more_questions() {
     const token = this.state.token
@@ -109,9 +116,7 @@ class MyQuestion extends Component {
     )
   }
 
-  static async getInitialProps(ctx) {
-    const token = await auth(ctx);
-    const user_id = await get_user_id_from_api(ctx, token);
+  static async get_questions(ctx, user_id, token) {
     const query = encodeQueryData({ "user_id": user_id })
     const url = api_path['questions'] + "?" + query
     var questions = await fetch_get(
@@ -129,8 +134,15 @@ class MyQuestion extends Component {
       questions.results[index]['answers'] = answers.filter(
         (e) => e.question_id == questions.results[index]['id'])
     }
+    return questions
+  }
 
+  static async getInitialProps(ctx) {
+    const token = await auth(ctx);
+    const user_id = await get_user_id_from_api(ctx, token);
+    var questions = await MyQuestion.get_questions(ctx, user_id, token)
     return {
+      "user_id": user_id,
       "token": token,
       "questions": questions
     }
