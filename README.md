@@ -8,6 +8,19 @@ https://github.com/simmarum/quizlytics
 #### Backend
 ```
 bash backend/create_v-env.sh
+touch backend/analytics/analytics/cred.py
+```
+Paste into `backend/analytics/analytics/cred.py`
+```
+def get_email_cred():
+    return {
+        "EMAIL_HOST_PASSWORD": "password",
+        "EMAIL_HOST_USER": "your_mail"
+    }
+```
+```
+. ./backend/v-env/bin/activate
+python ./backend/analytics/manage.py migrate
 bash backend/run_dev.sh
 ```
 #### Frontend
@@ -15,6 +28,8 @@ bash backend/run_dev.sh
 bash frontend/create_v-env.sh
 bash frontend/run_dev.sh
 ```
+#### Remember
+After installation some feature of site may not work because you have empty database and someone must populate it using console or django admin site. Search on the Internet for creating superuser in django from consol and access to admin page. Then populate database with some *cities*.
 
 ## Structure
 This app is like blog. You can create questions with answers (at least one) and save it to your account.
