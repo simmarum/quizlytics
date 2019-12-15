@@ -140,6 +140,7 @@ class QuestionSerializer(serializers.ModelSerializer):
             try:
                 q_answer.full_clean()
             except ValidationError as exc:
+                question.delete()
                 raise serializers.ValidationError(exc.message_dict)
             q_answer.save()
 
