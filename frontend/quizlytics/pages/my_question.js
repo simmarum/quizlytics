@@ -88,7 +88,7 @@ class MyQuestion extends Component {
                 <button
                   onClick={() => this.remove_question(element.id)}
                   className="btn" >Delete</button>
-                <div className="col-12">{element.title}</div>
+                <div className="col-12">{element.city_name}</div>
                 <div className="col-12">{element.title}</div>
                 {element.answers.map(function (answer) {
                   return <div className="col-12" key={answer.answer_number}>
