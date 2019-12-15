@@ -1,4 +1,5 @@
 import { get_auth_header } from './auth'
+import fetch from 'isomorphic-unfetch'
 
 const protocol = 'http'
 const host = '127.0.0.1'
