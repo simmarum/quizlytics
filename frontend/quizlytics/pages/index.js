@@ -6,7 +6,10 @@ import { get_all_from_api } from '../utils/get_data'
 class Analytics extends Component {
   constructor(props) {
     super(props)
-
+    if (typeof props.questions === 'undefined') {
+      props.questions.next = null
+      props.questions.results = []
+    }
     this.state = {
       s_text: '',
       token: props.token,
@@ -53,17 +56,19 @@ class Analytics extends Component {
       this.state.questions_next,
       this.state.token
     )
-    for (let index = 0; index < new_questions.results.length; index++) {
-      const aquery = encodeQueryData({
-        "uid": new_questions.results[index]['uid'],
-        "id": new_questions.results[index]['id']
-      })
-      const aurl = api_path['questions_answers'] + "?" + aquery
-      const answers = await get_all_from_api(this, aurl, token)
-      new_questions.results[index]['answers'] = answers.filter(
-        (e) => e.question_id == new_questions.results[index]['id'])
+    if (typeof new_questions.results !== 'undefined') {
+      for (let index = 0; index < new_questions.results.length; index++) {
+        const aquery = encodeQueryData({
+          "uid": new_questions.results[index]['uid'],
+          "id": new_questions.results[index]['id']
+        })
+        const aurl = api_path['questions_answers'] + "?" + aquery
+        const answers = await get_all_from_api(this, aurl, token)
+        new_questions.results[index]['answers'] = answers.filter(
+          (e) => e.question_id == new_questions.results[index]['id'])
+      }
+      questions = questions.concat(new_questions.results)
     }
-    questions = questions.concat(new_questions.results)
 
     this.setState({ "questions_next": new_questions.next })
     this.setState({ "questions": questions })
@@ -130,15 +135,17 @@ class Analytics extends Component {
       url,
       token,
     )
-    for (let index = 0; index < questions.results.length; index++) {
-      const aquery = encodeQueryData({
-        "uid": questions.results[index]['uid'],
-        "id": questions.results[index]['id']
-      })
-      const aurl = api_path['questions_answers'] + "?" + aquery
-      const answers = await get_all_from_api(ctx, aurl, token)
-      questions.results[index]['answers'] = answers.filter(
-        (e) => e.question_id == questions.results[index]['id'])
+    if (typeof questions !== 'undefined') {
+      for (let index = 0; index < questions.results.length; index++) {
+        const aquery = encodeQueryData({
+          "uid": questions.results[index]['uid'],
+          "id": questions.results[index]['id']
+        })
+        const aurl = api_path['questions_answers'] + "?" + aquery
+        const answers = await get_all_from_api(ctx, aurl, token)
+        questions.results[index]['answers'] = answers.filter(
+          (e) => e.question_id == questions.results[index]['id'])
+      }
     }
     return questions
   }
